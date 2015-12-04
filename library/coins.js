@@ -7,6 +7,30 @@ exports.move = function(data,moves,diceValue){
 		else
 			var pos = cellRoutes.indexOf(players[data.coinClass][data.coinId].position);
 
-	data.position = cellRoutes[pos+diceValue];
-	players[data.coinClass][data.coinId]=data;
+	
+		data.position = cellRoutes[pos+diceValue];
+		exports.kill(data);
+		players[data.coinClass][data.coinId]=data;
+
 };
+
+
+exports.kill=function(data){
+	var killingPlayer1=[],killingPlayer2=[];
+	if(data.coinClass=='player1'){
+		killingPlayer2=Object.keys(players.player2).filter(function(keys){
+			return players.player2[keys].position==data.position
+		});
+	}
+	if(data.coinClass=='player2'){
+		killingPlayer1=Object.keys(players.player1).filter(function(keys){
+			return players.player1[keys].position==data.position
+		});
+	}
+	if(killingPlayer2.length!=0)
+		players.player2[killingPlayer2[0]].position=53;
+	if(killingPlayer1.length!=0)
+		players.player1[killingPlayer1[0]].position=13;
+};
+
+exports.players=players;

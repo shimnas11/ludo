@@ -3,6 +3,7 @@ var ld = require('lodash');
 var querystring = require('querystring');
 var moves = require('./library/moves.js').players;
 var lib = require('./library/coins.js');
+var coinsData=require('./library/coins.js').players;
 
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
@@ -58,9 +59,9 @@ var moveCoin=function(req, res, next){
 		res.writeHead(200);
     	data=querystring.parse(data);
     	var diceValue = rollDice();
-    	lib.move(data,moves,diceValue);
     	data.clas="board";
-    	res.end(JSON.stringify(data));
+    	lib.move(data,moves,diceValue);
+    	res.end(JSON.stringify(coinsData));
 	});
     
 };
@@ -72,14 +73,10 @@ var giveUpdation=function(req, res, next){
     	});
 	req.on('end',function(){
 		res.writeHead(200);
-    	res.end(JSON.stringify(update));
+    	res.end(JSON.stringify(coinsData));
 	});
 };
 
-// var getUniqueId = (function () {
-//    var counter = 0;
-//    return function () {return counter += 1;}
-// })();
 
 var rollDice=function(){
 	return Math.floor(Math.random() * 6) + 1;
