@@ -59,7 +59,6 @@ var moveCoin=function(req, res, next){
 		res.writeHead(200);
     	data=querystring.parse(data);
     	var diceValue = rollDice();
-    	data.clas="board";
     	lib.move(data,moves,diceValue);
     	res.end(JSON.stringify(coinsData));
 	});

@@ -28,9 +28,9 @@ exports.kill=function(data){
 		});
 	}
 	if(killingPlayer2.length!=0)
-		players.player2[killingPlayer2[0]].position=53;
+		players.player2[killingPlayer2[0]].position=01;
 	if(killingPlayer1.length!=0)
-		players.player1[killingPlayer1[0]].position=13;
+		players.player1[killingPlayer1[0]].position=00;
 };
 
 exports.players=players;

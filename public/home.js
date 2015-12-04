@@ -12,11 +12,11 @@ var move = function(coin,clas){
     }
     if(players.player1[coin.id]==undefined){
         players.player1[coin.id]={};
-        players.player1[coin.id].position='greenhome';
+        players.player1[coin.id].position=00;
     }
      if(players.player2[coin.id]==undefined){
         players.player2[coin.id]={};
-        players.player2[coin.id].position='yellowhome';
+        players.player2[coin.id].position=01;
     }
     req.open('POST','movement',true);
     req.send('coinId='+coin.id+'&coinClass='+coin.className+'&clas='+
@@ -49,6 +49,10 @@ var movePlayers=function(players){
 }
 
 var movePlayer1=function(keys){
+     if(players.player1[keys].position==00){
+            $('.green').append(document.querySelector(".board .player1[id='"+keys+"']"));
+        return;
+    }
     var coin = document.querySelector(".green [id='"+keys+"']");
         if(coin==null)
             document.querySelector(".board [id='"+players.player1[keys].position+"']").appendChild
@@ -58,6 +62,11 @@ var movePlayer1=function(keys){
 }
 
 var movePlayer2=function(keys){
+    if(players.player2[keys].position==01){
+
+            $('.yellow').append(document.querySelector(".board .player2[id='"+keys+"']"));
+        return;
+    }
         var coin = document.querySelector(".yellow [id='"+keys+"']");
         if(coin==null)
             document.querySelector(".board [id='"+players.player2[keys].position+"']").appendChild
@@ -68,5 +77,5 @@ var movePlayer2=function(keys){
    
 
 window.onload = function (){
-    // setInterval(getUpdation,1000)
+    // setInterval(getUpdation,1000);
 };

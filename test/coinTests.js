@@ -48,7 +48,7 @@ describe("killing player1's coins by player2",function(){
 	var diceValue = 1;
 	it("once a player2 coin overlapped with player1's coin, player1's coin should go to its satarting position",function(){
 		lib.move(data,path,diceValue)
-		assert.equal(lib.players.player1['1'].position,13);
+		assert.equal(lib.players.player1['1'].position,0);
 	});
 	it("player2's coin should be in the position of player1",function(){
 		assert.equal(lib.players.player2['1'].position,23)
@@ -63,6 +63,6 @@ describe("killing player2's coins by player1",function(){
 		assert.equal(lib.players.player2['1'].position,23);
 	});
 	it("player1's coin should be in the position of player2",function(){
-		assert.equal(lib.players.player1['1'].position,12)
+		assert.equal(lib.players.player1['1'].position,13)
 	});
 });
