@@ -86,3 +86,17 @@ describe("safe position",function(){
 		assert.equal(lib.players.player2['3'].position,35);
 	});
 });
+
+describe('players can role the dice',function(){
+	var player = {turn:true,diceValue:0};
+	it('the value given by dice should be between 1-6',function(){
+		lib.rollDice(player);
+		assert.equal([1,2,3,4,5,6].indexOf(player.diceValue)>=0,true);
+	});
+
+	it('if the turn is not valid dont roll the dice ',function(){
+		player.turn=false;
+		lib.rollDice(player);
+		assert.equal([1,2,3,4,5,6].indexOf(player.diceValue)>=0,false);
+	})
+});	

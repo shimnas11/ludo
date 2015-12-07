@@ -1,5 +1,7 @@
 var safePositions = require('./moves.js').safePositions;
+var ld = require('lodash');
 var players = {player1:{},player2:{}}
+var diceValue ;
 exports.move = function(data,moves,diceValue){
 	var cellRoutes = moves[data.coinClass];
 	if(Object.keys(players[data.coinClass]) == 0 || players[data.coinClass][data.coinId]==undefined)
@@ -30,5 +32,14 @@ exports.kill = function(data){
 	if(killingPlayer1.length!=0 && safePositions.indexOf(data.position)<0)
 		players.player1[killingPlayer1[0]].position=00;
 };
+var rollDice = function(player){
+	if(player.turn==false)
+		return player.diceValue=0;
+	var value = ld.random(1,6);
+	if(!player)
+		return value;
+	return player.diceValue=value;
+};
 
+exports.rollDice = rollDice; 
 exports.players=players;
