@@ -4,6 +4,7 @@ var querystring = require('querystring');
 var moves = require('./library/moves.js').players;
 var lib = require('./library/coins.js');
 var coinsData=require('./library/coins.js').players;
+var diceValue;
 
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
@@ -58,7 +59,6 @@ var moveCoin=function(req, res, next){
 	req.on('end',function(){
 		res.writeHead(200);
     	data=querystring.parse(data);
-    	var diceValue = rollDice();
     	lib.move(data,moves,diceValue);
     	res.end(JSON.stringify(coinsData));
 	});
@@ -76,20 +76,22 @@ var giveUpdation=function(req, res, next){
 	});
 };
 var diceRoll = function(req,res,next){
+	console.log('==========================================');
 	var data = '';
 	req.on('data',function(chunk){
 		data +=chunk;
 	});
 	req.on('end',function(){
 		res.writeHead(200);
-		coinsData = lib.rollDice(data);
-		res.end(JSON.stringify(coinsData));
+		diceValue = lib.rollDice(data);
+		res.end(JSON.stringify(diceValue));
 	})
 }
 exports.post_handlers = [
 	{path: '^/$', handler: joinPlayer},
 	{path: '^/public/refresh$', handler: giveUpdation},
 	{path: '^/public/movement$', handler: moveCoin},
+	{path: '^/public/rollDice$', handler: diceRoll},
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [

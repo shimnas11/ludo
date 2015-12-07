@@ -66,6 +66,7 @@ describe("killing player2's coins by player1",function(){
 		assert.equal(lib.players.player1['1'].position,13)
 	});
 });
+
 describe('players can role the dice',function(){
 	var player = {turn:true,diceValue:0};
 	it('the value given by dice should be between 1-6',function(){

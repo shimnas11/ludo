@@ -78,6 +78,7 @@ var movePlayer2=function(keys){
 var rollDice = function(){
     $.get('rollDice', function(data){
         var diceValue = JSON.parse(data);
+        console.log(data);
     $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
         });
 }
