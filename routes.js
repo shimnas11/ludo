@@ -81,6 +81,7 @@ var moveCoin=function(req, res, next){
 		res.writeHead(200);
     	data=querystring.parse(data);
     	lib.move(data,moves,diceValue);
+    	diceValue=0;
     	res.end(JSON.stringify(coinsData));
 	});
     
@@ -97,7 +98,6 @@ var giveUpdation=function(req, res, next){
 	});
 };
 var diceRoll = function(req,res,next){
-	console.log('==========================================');
 	var data = '';
 	req.on('data',function(chunk){
 		data +=chunk;
@@ -122,4 +122,3 @@ exports.get_handlers = [
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
-

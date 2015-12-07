@@ -54,11 +54,16 @@ var movePlayer1=function(keys){
         return;
     }
     var coin = document.querySelector(".green [id='"+keys+"']");
-        if(coin==null)
+        if(coin==null){
             document.querySelector(".board [id='"+players.player1[keys].position+"']").appendChild
            (document.querySelector(".board .player1[id='"+keys+"']"));
-        else
-            document.querySelector(".board [id='"+players.player1[keys].position+"']").appendChild(coin);
+        }
+        else{
+            var x = document.querySelector(".board [id='"+players.player1[keys].position+"']")
+            if(x==null)
+                return;
+            x.appendChild(coin);
+        }
 }
 
 var movePlayer2=function(keys){
@@ -71,8 +76,12 @@ var movePlayer2=function(keys){
         if(coin==null)
             document.querySelector(".board [id='"+players.player2[keys].position+"']").appendChild
            (document.querySelector(".board .player2[id='"+keys+"']"));
-        else
-            document.querySelector(".board [id='"+players.player2[keys].position+"']").appendChild(coin);
+        else{
+            var x = document.querySelector(".board [id='"+players.player2[keys].position+"']");
+            if(x==null)
+                return;
+            x.appendChild(coin);
+        }
 }
 
 var rollDice = function(){
