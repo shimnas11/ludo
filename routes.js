@@ -75,12 +75,17 @@ var giveUpdation=function(req, res, next){
     	res.end(JSON.stringify(coinsData));
 	});
 };
-
-
-var rollDice=function(){
-	return Math.floor(Math.random() * 6) + 1;
+var diceRoll = function(req,res,next){
+	var data = '';
+	req.on('data',function(chunk){
+		data +=chunk;
+	});
+	req.on('end',function(){
+		res.writeHead(200);
+		coinsData = lib.rollDice(data);
+		res.end(JSON.stringify(coinsData));
+	})
 }
-
 exports.post_handlers = [
 	{path: '^/$', handler: joinPlayer},
 	{path: '^/public/refresh$', handler: giveUpdation},
@@ -89,6 +94,7 @@ exports.post_handlers = [
 ];
 exports.get_handlers = [
 	{path: '^/$', handler: serveIndex},
+	{path:'^/public/rollDice',handler:diceRoll},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];

@@ -1,4 +1,6 @@
+var ld = require('lodash');
 var players = {player1:{},player2:{}}
+var diceValue ;
 exports.move = function(data,moves,diceValue){
 
 	var cellRoutes = moves[data.coinClass];
@@ -23,6 +25,7 @@ exports.kill=function(data){
 		});
 	}
 	if(data.coinClass=='player2'){
+
 		killingPlayer1=Object.keys(players.player1).filter(function(keys){
 			return players.player1[keys].position==data.position
 		});
@@ -32,5 +35,14 @@ exports.kill=function(data){
 	if(killingPlayer1.length!=0)
 		players.player1[killingPlayer1[0]].position=00;
 };
+var rollDice = function(player){
+	if(player.turn==false)
+		return player.diceValue=0;
+	var value = ld.random(1,6);
+	if(!player)
+		return value;
+	return player.diceValue=value;
+};
 
+exports.rollDice = rollDice; 
 exports.players=players;

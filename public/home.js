@@ -74,8 +74,15 @@ var movePlayer2=function(keys){
         else
             document.querySelector(".board [id='"+players.player2[keys].position+"']").appendChild(coin);
 }
+
+var rollDice = function(){
+    $.get('rollDice', function(data){
+        var diceValue = JSON.parse(data);
+    $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
+        });
+}
    
 
-window.onload = function (){
-    // setInterval(getUpdation,1000);
-};
+// window.onload = function (){
+//     // setInterval(getUpdation,1000);
+// };
