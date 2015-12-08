@@ -54,5 +54,13 @@ var rollDice = function(player){
 	return player.diceValue=value;
 };
 
+var Coin = function(colour,id){
+	this.colour = colour;
+	this.position = false;
+	this.id = id;
+	this.prevPosition = false;
+}
+
+exports.Coin = Coin;
 exports.rollDice = rollDice; 
-exports.players=players;
+exports.players = players;

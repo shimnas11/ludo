@@ -4,8 +4,10 @@ var querystring = require('querystring');
 var moves = require('./library/moves.js').players;
 var lib = require('./library/coins.js');
 var coinsData=require('./library/coins.js').players;
+var game = require('./library/gameMaster.js').game;
 var diceValue;
 
+//normal response handling functions.............
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
 	console.log(res.statusCode);
@@ -17,27 +19,8 @@ var fileNotFound = function(req, res){
 	res.end('Not Found');
 };
 
-var joinPlayer = function(req, res){
-	var data='';
-	req.on('data',function(chunk){
-    		data+=new Buffer(chunk, 'base64').toString('ascii');
-    	});
-	req.on('end',function(){
-		res.writeHead(301,{
-    		'Location':'public/board.html',
-    		'Content-Type':'text/html',
-    	});
-		res.end();
-	});
-};
-
-var serveIndex = function(req, res, next){
-	req.url = '/public/index.html';
-	next();
-};
-
 var serveStaticFile = function(req, res, next){
-	var filePath = '.' + req.url;
+	var filePath = './public' + req.url;
 	fs.readFile(filePath, function(err, data){
 		if(data){
 			res.statusCode = 200;
@@ -49,6 +32,44 @@ var serveStaticFile = function(req, res, next){
 	});
 };
 
+var serveIndex = function(req, res, next){
+	req.url = '/index.html';
+	next();
+};
+
+//game responde handling functions...............
+var addPlayer = function(req, res){
+	var data = '';
+	req.on('data', function(chunk){
+		data += chunk;
+	});
+	req.on('end',function(){
+		var entry = querystring.parse(data);
+		game.addPlayer(entry.name);
+		res.writeHead(200, {'Set-Cookie': 'name='+entry.name});
+		res.end(JSON.stringify({username:entry.name}));
+	});
+};
+
+var servePlayers = function(req, res){
+	res.end(JSON.stringify(game.players));
+};
+
+// var joinPlayer = function(req, res){
+// 	var data='';
+// 	req.on('data',function(chunk){
+//     		data+=new Buffer(chunk, 'base64').toString('ascii');
+//     	});
+// 	req.on('end',function(){
+// 		res.writeHead(301,{
+//     		'Location':'public/board.html',
+//     		'Content-Type':'text/html',
+//     	});
+// 		res.end();
+// 	});
+// };
+
+//...............................................
 var update={};
 
 var moveCoin=function(req, res, next){
@@ -60,6 +81,7 @@ var moveCoin=function(req, res, next){
 		res.writeHead(200);
     	data=querystring.parse(data);
     	lib.move(data,moves,diceValue);
+    	diceValue=0;
     	res.end(JSON.stringify(coinsData));
 	});
     
@@ -76,7 +98,6 @@ var giveUpdation=function(req, res, next){
 	});
 };
 var diceRoll = function(req,res,next){
-	console.log('==========================================');
 	var data = '';
 	req.on('data',function(chunk){
 		data +=chunk;
@@ -88,16 +109,16 @@ var diceRoll = function(req,res,next){
 	})
 }
 exports.post_handlers = [
-	{path: '^/$', handler: joinPlayer},
-	{path: '^/public/refresh$', handler: giveUpdation},
-	{path: '^/public/movement$', handler: moveCoin},
-	{path: '^/public/rollDice$', handler: diceRoll},
+	{path: '^/register$', handler: addPlayer},
+	{path: '^/refresh$', handler: giveUpdation},
+	{path: '^/movement$', handler: moveCoin},
+	{path: '^/rollDice$', handler: diceRoll},
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [
 	{path: '^/$', handler: serveIndex},
-	{path:'^/public/rollDice',handler:diceRoll},
+	{path:'^/players$', handler: servePlayers},
+	{path:'^/rollDice',handler:diceRoll},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
-
