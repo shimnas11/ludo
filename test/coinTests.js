@@ -100,3 +100,17 @@ describe('players can role the dice',function(){
 		assert.equal([1,2,3,4,5,6].indexOf(player.diceValue)>=0,false);
 	})
 });	
+
+describe("player's coin should not enter the board until the dice valur is six",function(){
+	var data = { coinClass: 'player1', coinId: 3, position: 0 };
+	it("player1 coin 3 when the dice value is not six",function(){
+		var diceValue = 3;
+		lib.move(data,paths,diceValue);
+		assert.equal(lib.players.player1['3'].position,0);
+	});
+	it("player1 coin 3 when the dice value is six",function(){
+		var diceValue = 6;
+		lib.move(data,paths,diceValue);
+		assert.equal(lib.players.player1['3'].position,13);
+	});
+});

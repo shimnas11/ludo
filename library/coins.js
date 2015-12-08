@@ -5,32 +5,45 @@ var diceValue ;
 exports.move = function(data,moves,diceValue){
 	var cellRoutes = moves[data.coinClass];
 	if(Object.keys(players[data.coinClass]) == 0 || players[data.coinClass][data.coinId]==undefined)
-		var pos = cellRoutes.indexOf(data.position);			
+		var pos = cellRoutes.indexOf(+data.position);			
 	else
-		var pos = cellRoutes.indexOf(players[data.coinClass][data.coinId].position);
-	
-	data.position = cellRoutes[pos+diceValue];
-	exports.kill(data);
+		var pos = cellRoutes.indexOf(+players[data.coinClass][data.coinId].position);
+	if(!pos && diceValue==6)
+		data.position = cellRoutes[pos+1];
+	else if(pos){
+		data.position = cellRoutes[pos+diceValue];
+		exports.kill(data);
+	}
 	players[data.coinClass][data.coinId]=data;
 };
 
 
 exports.kill = function(data){
-	var killingPlayer1 = [],killingPlayer2 = [];
+	var killingPlayer1 = [], killingPlayer2 = [], sameCoins1 = [], sameCoins2 = []; 
 	if(data.coinClass == 'player1'){
 		killingPlayer2 = Object.keys(players.player2).filter(function(keys){
-			return players.player2[keys].position == data.position
+			return players.player2[keys].position == data.position;
+		});
+		sameCoins1 = Object.keys(players.player1).filter(function(keys){
+			return players.player1[keys].position == data.position;
 		});
 	}
 	if(data.coinClass == 'player2'){
 		killingPlayer1 = Object.keys(players.player1).filter(function(keys){
-			return players.player1[keys].position == data.position
+			return players.player1[keys].position == data.position;
+		});
+		sameCoins2 = Object.keys(players.player2).filter(function(keys){
+			return players.player2[keys].position == data.position;
 		});
 	}
-	if(killingPlayer2.length != 0 && safePositions.indexOf(data.position)<0)
+	if(killingPlayer2.length!=0 && safePositions.indexOf(data.position)<0)
 		players.player2[killingPlayer2[0]].position=01;
-	if(killingPlayer1.length!=0 && safePositions.indexOf(data.position)<0)
+	if(killingPlayer1.length!=0 && safePositions.indexOf(data.position)<0 )
 		players.player1[killingPlayer1[0]].position=00;
+	if(sameCoins1.length!=0 && safePositions.indexOf(data.position)<0)
+		data.position = players.player1[data.coinId].position;
+	if(sameCoins2.length!=0 && safePositions.indexOf(data.position)<0)
+		data.position = players.player2[data.coinId].position;
 };
 var rollDice = function(player){
 	if(player.turn==false)
