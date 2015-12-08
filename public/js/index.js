@@ -17,7 +17,7 @@ var checkPlayers = function(){
 			document.querySelector('#loading').style.display = 'none';
 			document.querySelector('#warn-full').style.display = 'block';
 		};
-	},5000);
+	},20000);
 };
 
 var getPlayers = function(){

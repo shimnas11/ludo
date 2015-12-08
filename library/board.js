@@ -23,6 +23,5 @@ var gridWithSafeZones = function(grid,points){
 exports.Board = function(){
 	// this.safeZones = generateIndexs(0);
 	// this.entryPoints = generateIndexs(15);
-	this.grid = gridWithSafeZones(grid(),this.safeZones);
+	// this.grid = gridWithSafeZones(grid(),this.safeZones);
 };
-
