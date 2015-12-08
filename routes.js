@@ -37,7 +37,7 @@ var serveIndex = function(req, res, next){
 	next();
 };
 
-//game responde handling functions...............
+//game response handling functions...............
 var addPlayer = function(req, res){
 	var data = '';
 	req.on('data', function(chunk){
@@ -55,20 +55,6 @@ var servePlayers = function(req, res){
 	res.end(JSON.stringify(game.players));
 };
 
-// var joinPlayer = function(req, res){
-// 	var data='';
-// 	req.on('data',function(chunk){
-//     		data+=new Buffer(chunk, 'base64').toString('ascii');
-//     	});
-// 	req.on('end',function(){
-// 		res.writeHead(301,{
-//     		'Location':'public/board.html',
-//     		'Content-Type':'text/html',
-//     	});
-// 		res.end();
-// 	});
-// };
-
 //...............................................
 var update={};
 
@@ -80,8 +66,8 @@ var moveCoin=function(req, res, next){
 	req.on('end',function(){
 		res.writeHead(200);
     	data=querystring.parse(data);
-    	lib.move(data,moves,diceValue);
-    	diceValue=0;
+    	var notPermitted = lib.move(data,moves,diceValue);
+    	diceValue=(notPermitted)?0:diceValue;
     	res.end(JSON.stringify(coinsData));
 	});
     
