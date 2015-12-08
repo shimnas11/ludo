@@ -3,18 +3,25 @@ var ld = require('lodash');
 var players = {player1:{},player2:{}}
 var diceValue ;
 exports.move = function(data,moves,diceValue){
+	var notPermitted;
 	var cellRoutes = moves[data.coinClass];
-	if(Object.keys(players[data.coinClass]) == 0 || players[data.coinClass][data.coinId]==undefined)
-		var pos = cellRoutes.indexOf(+data.position);			
-	else
+	if(Object.keys(players[data.coinClass]) == 0 || players[data.coinClass][data.coinId]==undefined){
+		var pos = cellRoutes.indexOf(+data.position);
+	}
+	else{
 		var pos = cellRoutes.indexOf(+players[data.coinClass][data.coinId].position);
-	if(!pos && diceValue==6)
+	}
+	if(!pos && diceValue==6){
 		data.position = cellRoutes[pos+1];
+		notPermitted=true;
+	}
 	else if(pos){
 		data.position = cellRoutes[pos+diceValue];
 		exports.kill(data);
+		notPermitted=true;
 	}
 	players[data.coinClass][data.coinId]=data;
+	return notPermitted;
 };
 
 

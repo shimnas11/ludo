@@ -114,3 +114,18 @@ describe("player's coin should not enter the board until the dice valur is six",
 		assert.equal(lib.players.player1['3'].position,13);
 	});
 });
+
+describe("when an invalid coin is selected , do nothing . when an valid coin is selected , move happens",function(){
+	var data1 = { coinClass:'player1', coinId: 3, position:0 };
+	var data2 = { coinClass:'player1', coinId: 1, position:13 };
+	it("if the move is invalid for a coin it does nothing ",function(){
+		var diceValue = 2;
+		var notPermitted = lib.move(data1,paths,diceValue);
+		assert.equal(notPermitted,true);
+	})
+	it("if the move is valid for a coin the movement happens ",function(){
+		var diceValue = 2;
+		var notPermitted = lib.move(data2,paths,diceValue);
+		assert.equal(notPermitted,undefined);
+	})
+})
