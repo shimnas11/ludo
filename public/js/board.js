@@ -23,7 +23,7 @@ var addSafeHouse=function(clas,id){
 	document.querySelector(".board [id='"+id+"']").style.backgroundColor="#000000";
 };
 
-var safeHouse=[13,31,35,53];
+var safeHouse=[13,31,35,53,33];
 safeHouse.forEach(function(id){
 	addSafeHouse('board',id)
 });
