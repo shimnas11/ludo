@@ -29,7 +29,7 @@ var getUpdation = function(){
         if(req.readyState==4 && req.status==200){
             var response = req.responseText;
             if(Object.keys(response).length!=0)
-                movePlayers(JSON.parse(response));  
+                movePlayers(JSON.parse(response));
         }
     };
     req.open('POST','refresh',true);
@@ -45,7 +45,7 @@ var movePlayers=function(players){
         player1Coins.map(movePlayer1);
     if(player2Coins.length>0)
             player2Coins.map(movePlayer2);
-   
+
 }
 
 var movePlayer1=function(keys){
@@ -85,14 +85,30 @@ var movePlayer2=function(keys){
 }
 
 var rollDice = function(){
-    $.get('rollDice', function(data){
-        var diceValue = JSON.parse(data);
-        console.log(data);
+  $.get('rollDice', function(data){
+    var diceValue = JSON.parse(data);
+    console.log(data);
     $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
-        });
-}
-   
+  });
+};
 
-// window.onload = function (){
-//     // setInterval(getUpdation,1000);
-// };
+var getUpdate = function(){
+  $.get('update',function(data){
+    var update = JSON.parse(data);
+    var name  = document.cookie.split('=')[1];
+    // if(update.player.name != name ){
+    //   $('body').css('pointer-events','none');
+    // }
+    if(update.player.name == name ){
+      $('.dice,.' +update.player.color ).css('pointer-events','auto');
+
+    }
+    $('.status-bar').html('<h3>'+update.player.name+'\'s turn</h3>');
+  });
+};
+
+window.onload = function (){
+  var interval = setInterval(getUpdate,1000);
+
+    // setInterval(getUpdation,1000);
+};

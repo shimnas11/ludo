@@ -5,8 +5,9 @@ var ld = require('lodash');
 var game = {};
 exports.game = game;
 
-var colours = ['green','blue','red','yellow'];
+var colours = ['green','yellow','blue','red'];
 game.players = [];
+game.currentTurn = 0;
 game.board;
 
 game.addPlayer = function(name){

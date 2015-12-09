@@ -55,6 +55,10 @@ var servePlayers = function(req, res){
 	res.end(JSON.stringify(game.players));
 };
 
+var giveUpdates = function(req, res){
+	var resData = {player:game.players[game.currentTurn]};
+	res.end(JSON.stringify(resData));
+};
 //...............................................
 var update={};
 
@@ -65,12 +69,12 @@ var moveCoin=function(req, res, next){
     });
 	req.on('end',function(){
 		res.writeHead(200);
-    	data=querystring.parse(data);
+    	data = querystring.parse(data);
     	var notPermitted = lib.move(data,moves,diceValue);
-    	diceValue=(notPermitted)?0:diceValue;
+    	diceValue = (notPermitted)?0:diceValue;
     	res.end(JSON.stringify(coinsData));
 	});
-    
+
 };
 
 var giveUpdation=function(req, res, next){
@@ -105,6 +109,7 @@ exports.get_handlers = [
 	{path: '^/$', handler: serveIndex},
 	{path:'^/players$', handler: servePlayers},
 	{path:'^/rollDice',handler:diceRoll},
+	{path:'^/update',handler:giveUpdates},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
