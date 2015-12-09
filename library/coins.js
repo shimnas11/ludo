@@ -17,8 +17,8 @@ exports.move = function(data,moves,diceValue){
 	}
 	else if(pos){
 		data.position = cellRoutes[pos+diceValue];
-		exports.kill(data);
-		notPermitted=true;
+		var coinMovement = exports.kill(data);
+		notPermitted=(coinMovement);
 	}
 	players[data.coinClass][data.coinId]=data;
 	return notPermitted;
@@ -26,6 +26,7 @@ exports.move = function(data,moves,diceValue){
 
 
 exports.kill = function(data){
+	var coinMovement = true;
 	var killingPlayer1 = [], killingPlayer2 = [], sameCoins1 = [], sameCoins2 = []; 
 	if(data.coinClass == 'player1'){
 		killingPlayer2 = Object.keys(players.player2).filter(function(keys){
@@ -47,10 +48,15 @@ exports.kill = function(data){
 		players.player2[killingPlayer2[0]].position=01;
 	if(killingPlayer1.length!=0 && safePositions.indexOf(data.position)<0 )
 		players.player1[killingPlayer1[0]].position=00;
-	if(sameCoins1.length!=0 && safePositions.indexOf(data.position)<0)
+	if(sameCoins1.length!=0 && safePositions.indexOf(data.position)<0){
 		data.position = players.player1[data.coinId].position;
-	if(sameCoins2.length!=0 && safePositions.indexOf(data.position)<0)
+		coinMovement = false;
+	}
+	if(sameCoins2.length!=0 && safePositions.indexOf(data.position)<0){
 		data.position = players.player2[data.coinId].position;
+		coinMovement = false;
+	}
+	return coinMovement;
 };
 var rollDice = function(player){
 	if(player.turn==false)
