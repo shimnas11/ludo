@@ -91,8 +91,9 @@ var rollDice = function(){
     $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
         });
 }
-   
+var get 
+$("body").css("pointer-events","none") 
 
-// window.onload = function (){
-//     // setInterval(getUpdation,1000);
-// };
+window.onload = function (){
+    // setInterval(getUpdation,1000);
+};

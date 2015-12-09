@@ -39,20 +39,30 @@ var serveIndex = function(req, res, next){
 
 //game response handling functions...............
 var addPlayer = function(req, res){
+	console.log(game.players.name);
 	var data = '';
 	req.on('data', function(chunk){
 		data += chunk;
 	});
 	req.on('end',function(){
+		var overflow = true;
 		var entry = querystring.parse(data);
-		game.addPlayer(entry.name);
-		res.writeHead(200, {'Set-Cookie': 'name='+entry.name});
-		res.end(JSON.stringify({username:entry.name}));
+		if(game.players.length<4){
+			game.addPlayer(entry.name);
+			overflow = false;
+		}
+		res.writeHead(200, {'Set-Cookie':'name='+entry.name});
+		res.end(JSON.stringify({username:entry.name,overflow:overflow}));
 	});
 };
 
 var servePlayers = function(req, res){
 	res.end(JSON.stringify(game.players));
+};
+
+var checkPlayerCount = function(req,res){
+	//res.end(JSON.stringify(game.players));
+	console.log(game.players);
 };
 
 //...............................................
@@ -108,3 +118,5 @@ exports.get_handlers = [
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
+
+// {path:'^/Rerequest',handler:checkPlayerCount}

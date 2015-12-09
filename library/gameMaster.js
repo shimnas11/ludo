@@ -11,5 +11,5 @@ game.board;
 
 game.addPlayer = function(name){
 	game.players.push(new Player(name,colours.shift()));
-	if(game.players.length >= 2) game.board = new Board();
+	// if(game.players.length >= 2) game.board = new Board();
 };
