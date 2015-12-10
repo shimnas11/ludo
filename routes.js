@@ -38,6 +38,7 @@ var serveIndex = function(req, res, next){
 
 //game response handling functions...............
 var addPlayer = function(req, res){
+	console.log(game.players.name);
 	var data = '';
 	req.on('data', function(chunk){
 		data += chunk;
@@ -112,14 +113,11 @@ var diceRoll = function(req,res,next){
 		res.writeHead(200);
 		game.dice = lib.rollDice();
 		if(game.dice == 6) {
-			console.log('inside six case------------------------');
 			game.players[0].chance++;
 		}
 		if(!game.players[0].chance){
-			console.log('inside changeTurn---------------------')
 			changeTurn();
 		}
-		console.log('turn',game.players[0]);
 		res.end(JSON.stringify(game.dice));
 	})
 }
@@ -138,3 +136,4 @@ exports.get_handlers = [
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
+
