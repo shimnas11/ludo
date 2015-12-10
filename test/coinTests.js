@@ -88,18 +88,11 @@ describe("safe position",function(){
 });
 
 describe('players can role the dice',function(){
-	var player = {turn:true,diceValue:0};
 	it('the value given by dice should be between 1-6',function(){
-		lib.rollDice(player);
-		assert.equal([1,2,3,4,5,6].indexOf(player.diceValue)>=0,true);
+		var diceValue = lib.rollDice();
+		assert.equal(6 >= diceValue >=1	,true);
 	});
-
-	it('if the turn is not valid dont roll the dice ',function(){
-		player.turn=false;
-		lib.rollDice(player);
-		assert.equal([1,2,3,4,5,6].indexOf(player.diceValue)>=0,false);
-	})
-});	
+});
 
 describe("player's coin should not enter the board until the dice valur is six",function(){
 	var data = { coinClass: 'player1', coinId: 3, position: 0 };

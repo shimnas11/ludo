@@ -81,14 +81,15 @@ var movePlayer2=function(keys){
             if(x==null)
                 return;
             x.appendChild(coin);
-        }
-}
+        };
+};
 
 var rollDice = function(){
   $.get('rollDice', function(data){
     var diceValue = JSON.parse(data);
     console.log(data);
-    $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
+    $('.dice').prop('src','./images/d' + diceValue + '.gif');
+    // $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
   });
 };
 
@@ -96,19 +97,18 @@ var getUpdate = function(){
   $.get('update',function(data){
     var update = JSON.parse(data);
     var name  = document.cookie.split('=')[1];
-    // if(update.player.name != name ){
-    //   $('body').css('pointer-events','none');
-    // }
-    if(update.player.name == name ){
+    if(update.player.name != name ){
+      $('.dice,.' +update.player.color ).css('pointer-events','none');
+    }
+    else {
       $('.dice,.' +update.player.color ).css('pointer-events','auto');
-
     }
     $('.status-bar').html('<h3>'+update.player.name+'\'s turn</h3>');
+    $('.dice').prop('src','./images/d' + update.dice + '.gif');
   });
 };
 
 window.onload = function (){
   var interval = setInterval(getUpdate,1000);
-
     // setInterval(getUpdation,1000);
 };

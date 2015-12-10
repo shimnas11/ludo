@@ -7,7 +7,7 @@ exports.game = game;
 
 var colours = ['green','yellow','blue','red'];
 game.players = [];
-game.currentTurn = 0;
+game.dice = 1;
 game.board;
 
 game.addPlayer = function(name){

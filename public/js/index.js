@@ -23,7 +23,7 @@ var checkPlayers = function(){
 var getPlayers = function(){
 	$.get('players',function(data){
 		players = JSON.parse(data);console.log(players);
-		if (players.length == 4) {
+		if (players.length == 2) {
 			clearInterval();
 			showCanvas();
 		};

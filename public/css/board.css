@@ -37,7 +37,7 @@ button{
 	background:#ff6666;
 }
 .dice {
-		pointer-events:none;
+		pointer-events:auto;
 }
 
 .round-button {

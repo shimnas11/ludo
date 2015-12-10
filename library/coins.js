@@ -27,7 +27,7 @@ exports.move = function(data,moves,diceValue){
 
 exports.kill = function(data){
 	var coinMovement = true;
-	var killingPlayer1 = [], killingPlayer2 = [], sameCoins1 = [], sameCoins2 = []; 
+	var killingPlayer1 = [], killingPlayer2 = [], sameCoins1 = [], sameCoins2 = [];
 	if(data.coinClass == 'player1'){
 		killingPlayer2 = Object.keys(players.player2).filter(function(keys){
 			return players.player2[keys].position == data.position;
@@ -58,13 +58,8 @@ exports.kill = function(data){
 	}
 	return coinMovement;
 };
-var rollDice = function(player){
-	if(player.turn==false)
-		return player.diceValue=0;
-	var value = ld.random(1,6);
-	if(!player)
-		return value;
-	return player.diceValue=value;
+var rollDice = function(){
+	return ld.random(1,6);
 };
 
 var Coin = function(colour,id){
@@ -75,5 +70,5 @@ var Coin = function(colour,id){
 }
 
 exports.Coin = Coin;
-exports.rollDice = rollDice; 
+exports.rollDice = rollDice;
 exports.players = players;
