@@ -90,21 +90,22 @@ var diceRoll = function(req,res,next){
 	});
 	req.on('end',function(){
 		res.writeHead(200);
-		diceValue = lib.rollDice(data);
-		res.end(JSON.stringify(diceValue));
+		data=querystring.parse(data);
+    	console.log('data parse dice :',data);
+		diceValue=lib.rollDice(data);
+		res.end(JSON.stringify(coinsData));
 	})
 }
 exports.post_handlers = [
 	{path: '^/register$', handler: addPlayer},
 	{path: '^/refresh$', handler: giveUpdation},
 	{path: '^/movement$', handler: moveCoin},
-	{path: '^/rollDice$', handler: diceRoll},
+	{path:'^/rollDice',handler:diceRoll},
 	{path: '', handler: method_not_allowed}
 ];
 exports.get_handlers = [
 	{path: '^/$', handler: serveIndex},
 	{path:'^/players$', handler: servePlayers},
-	{path:'^/rollDice',handler:diceRoll},
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];

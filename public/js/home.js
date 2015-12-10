@@ -1,4 +1,4 @@
-var players = {player1:{},player2:{}};
+var players = {player1:{},player2:{},dice:{diceValue:1}};
 var move = function(coin,clas){
     var req = new XMLHttpRequest();
     req.onreadystatechange = function(){
@@ -23,13 +23,35 @@ var move = function(coin,clas){
     clas+'&position='+players[coin.className][coin.id].position);
 };
 
+var rollDice = function(){
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function(){
+        if(req.readyState==4 && req.status==200){
+            var response = req.responseText;
+            console.log('rolling response :',response)
+            players.dice.diceValue=JSON.parse(response).dice.diceValue;
+            $('.dice').html('<img value="eyweywqfe" src="./images/d'+players.dice.diceValue+'.gif" onclick="rollDice()">')
+        }
+    }
+    req.open('POST','rollDice',true);
+    req.send('diceValue='+players.dice.diceValue);
+}
+
+var diceUpdate = function(data){
+    console.log('updation data :',data);
+    $('.dice').html('<img value="eyweywqfe" src="./images/d'+players.dice.diceValue+'.gif" onclick="rollDice()">')
+}
+
 var getUpdation = function(){
     var req = new XMLHttpRequest();
     req.onreadystatechange = function(){
         if(req.readyState==4 && req.status==200){
             var response = req.responseText;
-            if(Object.keys(response).length!=0)
-                movePlayers(JSON.parse(response));  
+            if(Object.keys(response).length!=0){
+                console.log('updation response :',response);
+                movePlayers(JSON.parse(response));
+                diceUpdate(JSON.parse(response));  
+            }
         }
     };
     req.open('POST','refresh',true);
@@ -68,7 +90,6 @@ var movePlayer1=function(keys){
 
 var movePlayer2=function(keys){
     if(players.player2[keys].position==01){
-
             $('.yellow').append(document.querySelector(".board .player2[id='"+keys+"']"));
         return;
     }
@@ -84,15 +105,9 @@ var movePlayer2=function(keys){
         }
 }
 
-var rollDice = function(){
-    $.get('rollDice', function(data){
-        var diceValue = JSON.parse(data);
-        console.log(data);
-    $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
-        });
-}
+
    
 
-// window.onload = function (){
-//     // setInterval(getUpdation,1000);
-// };
+window.onload = function (){
+    setInterval(getUpdation,1000);
+};
