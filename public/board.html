@@ -2,6 +2,8 @@
 <head>
 	<title>ludo board</title>
 	<link rel="stylesheet" type="text/css" href="css/board.css">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"> -->
 	<script src="js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src='js/home.js'></script>
 </head>
@@ -10,7 +12,7 @@
 	<div>
 		<div>
 			<script type="text/javascript" src='js/home.js'></script>
-			 <script type="text/javascript" src='js/board.js'></script>
+			<script type="text/javascript" src='js/board.js'></script>
 		</div>
 		<div>
 			<table border='1'class="green">
@@ -22,7 +24,7 @@
 				</tr>
 			</table>
 		</div>
-		<div>			
+		<div>
 			<table border='1'class="yellow">
 				<tr>
 					<td><button type='button' id='1' class="player2" onclick='move(this,"yellow")'></button></td>
@@ -35,6 +37,8 @@
 	</div>
 	<div class="dice" >
 		<img value="qwqqw" src="./images/d1.gif" id='diceSuper' onclick="rollDice()">
+	</div>
+	<div class="status-bar">
 	</div>
 </body>
 </html>

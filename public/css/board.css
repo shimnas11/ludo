@@ -9,6 +9,7 @@
 	position:absolute;
 	left:600px;
 	top:40px;
+	pointer-events:none;
 }
 
 .yellow{
@@ -16,6 +17,7 @@
 	position:absolute;
 	left:600px;
 	top:600px;
+	pointer-events:none;
 }
 button{
 	width:35px;
@@ -34,6 +36,10 @@ button{
 	display:block;
 	background:#ff6666;
 }
+.dice {
+		pointer-events:none;
+}
+
 .round-button {
     width: 10%;
     height: 0;
@@ -52,4 +58,8 @@ button{
     width: 76%;
     padding: 12%;
     height: auto;
+}
+
+.status-bar {
+	float:left;
 }

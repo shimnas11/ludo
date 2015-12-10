@@ -32,8 +32,10 @@
 		</div>
 		<div id="load-player" class="w3-container w3-center" style="display:none">
 			<h1 id="loading">Waiting for players <img src="images/skype-ball.GIF"></h1>
-			<h1 id="warn-not-enough" style="display:none">Sorry you don't have enough players to start the game</h1>
-			<h1 id="warn-full" style="display:none">Oops.. Current game has started</h1>
+			<div id="notice" class="w3-container w3-center" style="display:none">
+				<h1 id="warn"></h1>
+				<button class="w3-btn w3-teal w3-round-xxlarge" id="Retry">Re Try</button>
+			</div>
 			<div id="player_list">
 		</div>
 	</div>
