@@ -56,7 +56,7 @@ var servePlayers = function(req, res){
 
 var giveUpdates = function(req, res){
 	var resData = {
-		player : game.players[0], //players[0] always is current player
+		player : game.findCurrentPlayer(),
 		dice : game.diceValue
 	};
 	res.end(JSON.stringify(resData))

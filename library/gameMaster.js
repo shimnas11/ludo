@@ -47,6 +47,8 @@ Game.prototype = {
 	rollDice:function(){
 		this._dice.roll();
 		var currentPlayer = this.findCurrentPlayer();
+		currentPlayer.chance--;
+
 		if(this._dice.diceValue == 6)
 			currentPlayer.chance++;
 		if(!currentPlayer.chance)
