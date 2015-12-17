@@ -1,5 +1,4 @@
 var safePositions = require('./moves.js').safePositions;
-var ld = require('lodash');
 var players = {player1:{},player2:{}}
 var diceValue ;
 exports.move = function(data,moves,diceValue){
@@ -58,10 +57,6 @@ exports.kill = function(data){
 	}
 	return coinMovement;
 };
-var rollDice = function(){
-	return ld.random(1,6);
-};
-
 var Coin = function(colour,id){
 	this.colour = colour;
 	this.position = false;
@@ -70,5 +65,4 @@ var Coin = function(colour,id){
 }
 
 exports.Coin = Coin;
-exports.rollDice = rollDice;
 exports.players = players;

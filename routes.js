@@ -4,8 +4,8 @@ var querystring = require('querystring');
 var moves = require('./library/moves.js').players;
 var lib = require('./library/coins.js');
 var coinsData=require('./library/coins.js').players;
-var game = require('./library/gameMaster.js').game;
-
+var gameLib = require('./library/gameMaster');
+var game = new gameLib(2);
 //normal response handling functions.............
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
@@ -38,20 +38,15 @@ var serveIndex = function(req, res, next){
 
 //game response handling functions...............
 var addPlayer = function(req, res){
-	console.log(game.players.name);
 	var data = '';
 	req.on('data', function(chunk){
 		data += chunk;
 	});
 	req.on('end',function(){
-		var overflow = true;
-		var entry = querystring.parse(data);
-		if(game.players.length < 4){
-			game.addPlayer(entry.name);
-			overflow = false;
-		}
-		res.writeHead(200, {'Set-Cookie': 'name='+entry.name});
-		res.end(JSON.stringify({username:entry.name,overflow:overflow}));
+		var name = querystring.parse(data).name;
+		var overflow = game.addPlayer(name) ? false : true ;
+		res.writeHead(200, {'Set-Cookie': 'name=' + name});
+		res.end(JSON.stringify({username:name,overflow:overflow}));
 	});
 };
 
@@ -62,7 +57,7 @@ var servePlayers = function(req, res){
 var giveUpdates = function(req, res){
 	var resData = {
 		player : game.players[0], //players[0] always is current player
-		dice : game.dice
+		dice : game.diceValue
 	};
 	res.end(JSON.stringify(resData))
 };
@@ -78,10 +73,10 @@ var moveCoin=function(req, res, next){
 		res.writeHead(200);
   	data = querystring.parse(data);
 		console.log('data',data);
-  	var notPermitted = lib.move(data,moves,game.dice);
+  	var notPermitted = lib.move(data,moves,game.diceValue);
 		game.players[0].chance--;
 		// if(game.players[0].chance ==0 ){
-		// 	changeTurn();
+		// 	game.changeTurn();
 		// };
   	// game.dice = (notPermitted) ? 0 : game.dice;
   	res.end(JSON.stringify(coinsData));
@@ -99,11 +94,6 @@ var giveUpdation=function(req, res, next){
 	});
 };
 
-var changeTurn  = function() {
-	game.players.push(game.players.shift());
-	console.log('inside changeTurn function',game.players);
-}
-
 var diceRoll = function(req,res,next){
 	var data = '';
 	req.on('data',function(chunk){
@@ -111,16 +101,11 @@ var diceRoll = function(req,res,next){
 	});
 	req.on('end',function(){
 		res.writeHead(200);
-		game.dice = lib.rollDice();
-		if(game.dice == 6) {
-			game.players[0].chance++;
-		}
-		if(!game.players[0].chance){
-			changeTurn();
-		}
-		res.end(JSON.stringify(game.dice));
-	})
-}
+		game.rollDice();
+		res.end(JSON.stringify(game.diceValue));
+	});
+};
+
 exports.post_handlers = [
 	{path: '^/register$', handler: addPlayer},
 	{path: '^/refresh$', handler: giveUpdation},
@@ -136,4 +121,3 @@ exports.get_handlers = [
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
-

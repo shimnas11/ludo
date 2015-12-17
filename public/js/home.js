@@ -19,6 +19,7 @@ var move = function(coin,clas){
         players.player2[coin.id].position=01;
     }
     req.open('POST','movement',true);
+    console.log('coin details',players[coin.class]);
     req.send('coinId='+coin.id+'&coinClass='+coin.className+'&clas='+
     clas+'&position='+players[coin.className][coin.id].position);
 };
