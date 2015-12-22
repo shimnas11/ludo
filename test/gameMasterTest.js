@@ -23,9 +23,20 @@ describe('gameMaster can change player\'s turn',function(){
 
   it('the next player will get the turn',function(){
     game.addPlayer('a');
+    assert.ok(game.getPlayer('a').coins.length,4);
+    assert.ok(game.getPlayer('a').getCoinColour(),'green');
+
     game.addPlayer('b');
+    assert.ok(game.getPlayer('b').coins.length,4);
+    assert.ok(game.getPlayer('b').getCoinColour(),'yellow');
+
     game.addPlayer('c');
+    assert.ok(game.getPlayer('c').coins.length,4);
+    assert.ok(game.getPlayer('c').getCoinColour(),'blue');
+    
     game.addPlayer('d');
+    assert.ok(game.getPlayer('d').coins.length,4);
+    assert.ok(game.getPlayer('d').getCoinColour(),'red');
 
     assert.ok(game.players[0].isMyTurn);
 

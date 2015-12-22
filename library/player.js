@@ -1,25 +1,20 @@
-var Coin = require('./coins.js').Coin;
-
-var generateCoins = function(color,count){
-	var coins = [];
-	for (var i = 0; i < count; i++)
-		coins.push(new Coin(color,i));
-	return coins;
-}
-
-var Player = function(name,color){
+var Player = function(name,coins){
 	this.name = name;
-	this.color = color;
-	this._coins = generateCoins(color,4);
+	this._coins = coins;
 	this._kill = 0;
 	this._chance = 0;
 	this.isMyTurn = false;
 }
 
 Player.prototype =  {
-
+	get coins(){
+		return this._coins;
+	},
+	getCoinColour : function(){
+		return (this._coins.length==0) ? null: this._coins[0].colour;
+	},
 	getCoin : function(coinId){
-		return (coinId ? this._coins[coinId] : this._coins);
+		return (coinId) ? this._coins[coinId] : null;
 	},
 	get chance(){
 		return this._chance;

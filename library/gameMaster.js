@@ -1,23 +1,14 @@
 var Player = require('./player');
 var ld = require('lodash');
 var diceLib = require('./dice.js');
-
-var colours = ['green','yellow','blue','red'];
-
-// var game = {};
-// game.players = [];
-// game.dice = 1;
-// game.board;
-//
-// game.addPlayer = function(name){
-// 	game.players.push(new Player(name,colours.shift()));
-// };
+var Coin = require('./coins.js').Coin;
 
 var Game = function(totalNumberOfPlayers){
 	this.board = [];
 	this._dice = new diceLib.Dice();
 	this.players = [];
 	this.totalNumberOfPlayers = totalNumberOfPlayers;
+	this.colours = ['green','yellow','blue','red'];
 }
 
 Game.prototype = {
@@ -27,13 +18,20 @@ Game.prototype = {
 	addPlayer : function(name){
 		var numberOfPlayers = this.players.length;
 		if(numberOfPlayers < this.totalNumberOfPlayers){
-			var player = new Player(name,colours.shift());
+			var coins = this.generateCoins(this.colours.shift(),4);
+			
+			var player = new Player(name,coins);
 			player.isMyTurn = numberOfPlayers==0;
+			
 			this.players.push(player);
 			return true;
 		};
 		return false;
 	},
+	getPlayer:function(name){
+		var playerIndex = ld.findIndex(this.players, { 'name': name });
+		return this.players[playerIndex];
+	},	
 	findCurrentPlayer:function(){
 		var currentPlayerIndex = ld.findIndex(this.players, { 'isMyTurn': true });
 		return this.players[currentPlayerIndex];
@@ -46,11 +44,13 @@ Game.prototype = {
 	},
 	rollDice:function(){
 		this._dice.roll();
+		
 		var currentPlayer = this.findCurrentPlayer();
 		currentPlayer.chance--;
 
 		if(this._dice.diceValue == 6)
 			currentPlayer.chance++;
+		
 		if(!currentPlayer.chance)
 			this.changeTurn();
 	},
@@ -58,7 +58,14 @@ Game.prototype = {
 		var player = this.findCurrentPlayer();
 		this.findNextPlayer().isMyTurn = true;
 		player.isMyTurn = false;
-	}
+	},
+
+	generateCoins:function(color,count){
+		var coins = [];
+		for (var i = 0; i < count; i++)
+			coins.push(new Coin(color,i));
+		return coins;
+	},
 };
 
 module.exports = Game;

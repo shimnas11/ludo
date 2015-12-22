@@ -3,12 +3,6 @@ var expect = require('chai').expect;
 var Player = require('../library/player');
 
 describe('Player',function(){
-    it('is created with 4 coins',function(){
-      var player = new Player('alex','red');
-      var coins = player.getCoin();
-      expect(coins).to.have.length(4);
-    });
-
     it('is created without any chance and kill',function(){
       var player = new Player('alex','red');
       assert.equal(player.kill,0);
