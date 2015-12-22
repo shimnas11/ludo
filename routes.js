@@ -4,9 +4,8 @@ var querystring = require('querystring');
 var moves = require('./library/moves.js').players;
 var lib = require('./library/coins.js');
 var coinsData=require('./library/coins.js').players;
-var game = require('./library/gameMaster.js').game;
-var diceValue;
-
+var gameLib = require('./library/gameMaster');
+var game = new gameLib(2);
 //normal response handling functions.............
 var method_not_allowed = function(req, res){
 	res.statusCode = 405;
@@ -39,20 +38,15 @@ var serveIndex = function(req, res, next){
 
 //game response handling functions...............
 var addPlayer = function(req, res){
-	console.log(game.players.name);
 	var data = '';
 	req.on('data', function(chunk){
 		data += chunk;
 	});
 	req.on('end',function(){
-		var overflow = true;
-		var entry = querystring.parse(data);
-		if(game.players.length<4){
-			game.addPlayer(entry.name);
-			overflow = false;
-		}
-		res.writeHead(200, {'Set-Cookie':'name='+entry.name});
-		res.end(JSON.stringify({username:entry.name,overflow:overflow}));
+		var name = querystring.parse(data).name;
+		var overflow = game.addPlayer(name) ? false : true ;
+		res.writeHead(200, {'Set-Cookie': 'name=' + name});
+		res.end(JSON.stringify({username:name,overflow:overflow}));
 	});
 };
 
@@ -61,8 +55,11 @@ var servePlayers = function(req, res){
 };
 
 var giveUpdates = function(req, res){
-	var resData = {player:game.players[game.currentTurn]};
-	res.end(JSON.stringify(resData));
+	var resData = {
+		player : game.findCurrentPlayer(),
+		dice : game.diceValue
+	};
+	res.end(JSON.stringify(resData))
 };
 //...............................................
 var update={};
@@ -70,16 +67,20 @@ var update={};
 var moveCoin=function(req, res, next){
 	var data='';
 	req.on('data',function(chunk){
-			data+=chunk;
-    });
+		data+=chunk;
+  });
 	req.on('end',function(){
 		res.writeHead(200);
-    	data = querystring.parse(data);
-    	var notPermitted = lib.move(data,moves,diceValue);
-    	diceValue = (notPermitted)?0:diceValue;
-    	res.end(JSON.stringify(coinsData));
+  	data = querystring.parse(data);
+		console.log('data',data);
+  	var notPermitted = lib.move(data,moves,game.diceValue);
+		game.players[0].chance--;
+		// if(game.players[0].chance ==0 ){
+		// 	game.changeTurn();
+		// };
+  	// game.dice = (notPermitted) ? 0 : game.dice;
+  	res.end(JSON.stringify(coinsData));
 	});
-
 };
 
 var giveUpdation=function(req, res, next){
@@ -92,6 +93,7 @@ var giveUpdation=function(req, res, next){
     	res.end(JSON.stringify(coinsData));
 	});
 };
+
 var diceRoll = function(req,res,next){
 	var data = '';
 	req.on('data',function(chunk){
@@ -105,6 +107,7 @@ var diceRoll = function(req,res,next){
 		res.end(JSON.stringify(coinsData));
 	})
 }
+
 exports.post_handlers = [
 	{path: '^/register$', handler: addPlayer},
 	{path: '^/refresh$', handler: giveUpdation},
@@ -119,4 +122,3 @@ exports.get_handlers = [
 	{path: '', handler: serveStaticFile},
 	{path: '', handler: fileNotFound}
 ];
-

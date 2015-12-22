@@ -19,6 +19,7 @@ var move = function(coin,clas){
         players.player2[coin.id].position=01;
     }
     req.open('POST','movement',true);
+    console.log('coin details',players[coin.class]);
     req.send('coinId='+coin.id+'&coinClass='+coin.className+'&clas='+
     clas+'&position='+players[coin.className][coin.id].position);
 };
@@ -90,25 +91,23 @@ var movePlayer2=function(keys){
     if(players.player2[keys].position==01){
         $('.yellow').append(document.querySelector(".board .player2[id='"+keys+"']"));
         return;
-    };
-    var coin = document.querySelector(".yellow [id='"+keys+"']");
-    if(coin==null)
-        document.querySelector(".board [id='"+players.player2[keys].position+"']").appendChild
-       (document.querySelector(".board .player2[id='"+keys+"']"));
-    else{
-        var x = document.querySelector(".board [id='"+players.player2[keys].position+"']");
-        if(x==null)
-            return;
-        x.appendChild(coin);
-    };
+    }
+        var coin = document.querySelector(".yellow [id='"+keys+"']");
+        if(coin==null)
+            document.querySelector(".board [id='"+players.player2[keys].position+"']").appendChild
+           (document.querySelector(".board .player2[id='"+keys+"']"));
+        else{
+            var x = document.querySelector(".board [id='"+players.player2[keys].position+"']");
+            if(x==null)
+                return;
+            x.appendChild(coin);
+        };
 };
 
 var rollDice = function(){
   $.get('rollDice', function(data){
     var diceValue = JSON.parse(data);
-    console.log(data);
-    $('.dice').html('<img src="./images/d'+(+diceValue)+'.gif" onclick="rollDice()">')
-
+    $('.dice').prop('src','./images/d' + diceValue + '.gif');
   });
 };
 
@@ -116,10 +115,14 @@ var getUpdate = function(){
   $.get('update',function(data){
     var update = JSON.parse(data);
     var name  = document.cookie.split('=')[1];
-    if(update.player.name == name ){
+    if(update.player.name != name ){
+      $('.dice,.' +update.player.color ).css('pointer-events','none');
+    }
+    else {
       $('.dice,.' +update.player.color ).css('pointer-events','auto');
     }
     $('.status-bar').html('<h3>'+update.player.name+'\'s turn</h3>');
+    $('.dice').prop('src','./images/d' + update.dice + '.gif');
   });
 };
 

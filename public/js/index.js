@@ -24,17 +24,12 @@ var showCanvas = function() {
 
 var checkPlayers = function(){
 	var interval = setInterval(getPlayers,3000);
-	setTimeout(function(){
-		clearInterval(interval);
-		if(players.length == 1)	warnNotEnough();	
-		else if(players.length <= 4) showCanvas();
-	},20000);
 };
 
 var getPlayers = function(){
 	$.get('players',function(data){
 		players = JSON.parse(data);console.log(players);
-		if (players.length == 4) {
+		if (players.length == 2) {
 			clearInterval();
 			showCanvas();
 		};

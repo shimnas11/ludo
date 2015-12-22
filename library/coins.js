@@ -1,6 +1,11 @@
 var safePositions = require('./moves.js').safePositions;
+<<<<<<< HEAD
 var ld = require('lodash');
 var players = {player1:{},player2:{},dice:{diceValue:1}}
+=======
+var players = {player1:{},player2:{}}
+var diceValue ;
+>>>>>>> 7a552d469e3637091cabe3de88d33a262270e363
 exports.move = function(data,moves,diceValue){
 	var notPermitted;
 	var cellRoutes = moves[data.coinClass];
@@ -26,7 +31,7 @@ exports.move = function(data,moves,diceValue){
 
 exports.kill = function(data){
 	var coinMovement = true;
-	var killingPlayer1 = [], killingPlayer2 = [], sameCoins1 = [], sameCoins2 = []; 
+	var killingPlayer1 = [], killingPlayer2 = [], sameCoins1 = [], sameCoins2 = [];
 	if(data.coinClass == 'player1'){
 		killingPlayer2 = Object.keys(players.player2).filter(function(keys){
 			return players.player2[keys].position == data.position;
@@ -57,6 +62,7 @@ exports.kill = function(data){
 	}
 	return coinMovement;
 };
+<<<<<<< HEAD
 var rollDice = function(data){
 	// console.log('-----------------dice object',data)
 	var value = ld.random(1,6);
@@ -65,6 +71,8 @@ var rollDice = function(data){
 	return data.diceValue;
 };
 
+=======
+>>>>>>> 7a552d469e3637091cabe3de88d33a262270e363
 var Coin = function(colour,id){
 	this.colour = colour;
 	this.position = false;
@@ -73,5 +81,4 @@ var Coin = function(colour,id){
 }
 
 exports.Coin = Coin;
-exports.rollDice = rollDice; 
 exports.players = players;
