@@ -1,18 +1,18 @@
 var ld = require('lodash');
 
 var Dice = function(){
-  this._currentValue = 1;
+  this._value = 1;
 }
 
 Dice.prototype={
-  get diceValue(){
-    return this._currentValue;
+  get value(){
+    return this._value;
   },
 
   roll : function(){
-    this._currentValue = ld.random(1,6);
-    return this.diceValue;
+    this._value = ld.random(1,6);
+    return this._value;
   }
 }
 
-exports.Dice = Dice;
+module.exports = Dice;

@@ -1,21 +1,9 @@
-var players = [];
-
-
 //alerting functions ............................
-
-var warnFull = function(){
-	console.log('in warn full');
+var warn = function(message){
 	$("#loading").hide();
 	$('#notice').show();
-	$('#warn').html('Oops.. Current game has started');
+	$('#warn').html(message);
 };
-var warnNotEnough = function(){
-	$("#loading").hide();
-	$('#notice').show();
-	$('#warn').html('Sorry you don\'t have enough players to start the game');
-};
-
-
 //...............................................
 
 var showCanvas = function() {
@@ -23,16 +11,14 @@ var showCanvas = function() {
 };
 
 var checkPlayers = function(){
-	var interval = setInterval(getPlayers,3000);
+	var interval = setInterval(isReady,1000);
 };
 
-var getPlayers = function(){
-	$.get('players',function(data){
-		players = JSON.parse(data);console.log(players);
-		if (players.length == 2) {
-			clearInterval();
+var isReady = function(){
+	$.get('ready',function(data){
+		var game = JSON.parse(data);
+		if (game.ready)
 			showCanvas();
-		};
 	});
 };
 
@@ -41,19 +27,18 @@ var postGameRequest = function(name) {
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function(){
 		if(req.readyState == 4 && req.status == 200){
-			var resData = JSON.parse(req.responseText);
-			document.querySelector('#welcome-user').innerHTML = 'Welcome, ' + resData.username ;
+			var register = JSON.parse(req.responseText);
+			// document.querySelector('#welcome-user').innerHTML = 'Welcome, ' + resData.username ;
 			document.querySelector('#join').style.display = 'none';
 			document.querySelector('#load-player').style.display = 'block';
-			if(resData.overflow){
-				warnFull();
+			if(!register.done){
+				warn('Oops,..Current game started');
 				return;
 			}
 			checkPlayers();
 		};
 	};
 	req.open('POST', 'register', true);
-	//req.send('name=' + name);
 	req.send('name=' + document.querySelector('input[name="name"]').value);
 };
 

@@ -1,46 +1,45 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html>
-<head>
-	<title>kavidikali</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-	<script type="text/javascript" src="js/index.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-</head>
-<body>
-	<header class="w3-container w3-teal">
-		<h1 class="w3-half">Kavidikali.com</h1>
-		<h5 id="welcome-user" style="float:right"></h3>
-	</header>
-	<div class="w3-container w3-light-grey w3-card-16 w3-center" style="width:100%;height:767px">
-		<div id="join">
-			<button onclick="document.getElementById('id01').style.display='block'" class="w3-btn w3-orange w3-round-xxlarge">Play</button>
-			<div id="id01" class="w3-modal">
-				<div class="w3-modal-content w3-center w3-card-4 w3-white w3-animate-bottom">
-					<header class="w3-container"> 
-					    <span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn">&times;</span>
-					</header>
-				    <div class="w3-container" id="form">
-						<div class="w3-input-group"> 
-						    <input class="w3-input" type="text" name="name" required>
-						    <label class="w3-label w3-validate">Name</label>
+	<head>
+		<title>kavidikali</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+		<script type="text/javascript" src="js/index.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<header class="w3-container w3-teal">
+			<h1 class="w3-half">Kavidikali.com</h1>
+			<h5 id="welcome-user" style="float:right"></h5>
+		</header>
+		<div class="w3-container w3-light-grey w3-card-16 w3-center" style="width:100%;height:767px">
+			<div id="join">
+				<button onclick="$('#id01').show()" class="w3-btn w3-orange w3-round-xxlarge">Play</button>
+				<div id="id01" class="w3-modal">
+					<div class="w3-modal-content w3-center w3-card-4 w3-white w3-animate-bottom">
+						<header class="w3-container">
+						  <span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn">&times;</span>
+						</header>
+					  <div id="form" class="w3-container">
+							<div class="w3-input-group">
+							  <input class="w3-input" type="text" name="name" required>
+							  <label class="w3-label w3-validate">Name</label>
+							</div>
+							<button class="w3-btn w3-teal w3-round-xxlarge" id="register">Register</button>
 						</div>
-						<button class="w3-btn w3-teal w3-round-xxlarge" id="register">Register</button>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div id="load-player" class="w3-container w3-center" style="display:none">
-			<h1 id="loading">Waiting for players <img src="images/skype-ball.GIF"></h1>
-			<div id="notice" class="w3-container w3-center" style="display:none">
-				<h1 id="warn"></h1>
-				<button class="w3-btn w3-teal w3-round-xxlarge" id="Retry">Re Try</button>
+			<div id="load-player" class="w3-container w3-center" style="display:none">
+				<h1 id="loading">Waiting for players <img src="images/skype-ball.GIF"></h1>
+				<div id="notice" class="w3-container w3-center" style="display:none">
+					<h1 id="warn"></h1>
+					<button class="w3-btn w3-teal w3-round-xxlarge" id="Retry">Re Try</button>
+				</div>
 			</div>
-			<div id="player_list">
 		</div>
-	</div>
-	<footer class="w3-bottom w3-teal w3-center">
-		<h5>powered by: step4 </h5>
-	</footer>
-</body>
+		<footer class="w3-bottom w3-teal w3-center">
+			<h5>powered by: step4 </h5>
+		</footer>
+	</body>
 </html>

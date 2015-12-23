@@ -65,5 +65,11 @@ var Coin = function(colour,id){
 	this.prevPosition = false;
 }
 
+Coin.prototype = {
+	move: function(distance){
+
+	}
+}
+
 exports.Coin = Coin;
 exports.players = players;
