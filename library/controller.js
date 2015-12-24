@@ -17,10 +17,12 @@ var ensureLogin = function(req,res,next){
 };
 
 var app = express();
+
 app.use('^/$',function(req, res, next){
   req.url = '/index.html';
   next();
 });
+
 app.use(express.static('./public'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
