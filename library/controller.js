@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var querystring = require('querystring');
 var Game = require('./gameMaster');
 var game = new Game(2);
 
@@ -17,13 +18,14 @@ var ensureLogin = function(req,res,next){
 };
 
 var app = express();
-app.use('^/$',function(req, res, next){
+app.get('/',function(req, res, next){
   req.url = '/index.html';
   next();
 });
 app.use(express.static('./public'));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended:true}));
+// app.use(bodyParser.raw());
 app.use(loadUser);
 
 // all gets............
@@ -32,8 +34,9 @@ app.get('/ready',function(req, res){
   res.send(resString);
 });
 
-app.get('/update',ensureLogin,function(req, res){
-	console.log(game.diceValue);
+
+// all posts...........
+app.get('/update',function(req, res){
   var resData = {
 		player : game.findCurrentPlayer(),
 		dice : game.diceValue
@@ -41,21 +44,21 @@ app.get('/update',ensureLogin,function(req, res){
 	res.end(JSON.stringify(resData));
 });
 
-// all posts...........
 app.post('/register',function(req, res){
-  var done = false;
+  var success = false;
+	 var name = req.body.name;
   if(!game.isReady()){
-    game.addPlayer(req.body.name);
-    done = true;
+    game.addPlayer(name);
+    success = true;
   }
-  res.writeHead(200, {'Set-Cookie': 'name=' + req.body.name});
-  res.end(JSON.stringify({'done': done}));
+	res.cookie('name',name);
+  res.end(JSON.stringify({'success': success}));
 });
 
 app.post('/rollDice',function(req, res){
   var diceData =JSON.stringify({'diceValue': game.rollDice()});
   res.end(diceData);
-})
+});
 
 app.game = game;
 module.exports = app;

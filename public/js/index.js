@@ -10,10 +10,6 @@ var showCanvas = function() {
 	window.location.href = './board.html';
 };
 
-var checkPlayers = function(){
-	var interval = setInterval(isReady,1000);
-};
-
 var isReady = function(){
 	$.get('ready',function(data){
 		var game = JSON.parse(data);
@@ -22,32 +18,32 @@ var isReady = function(){
 	});
 };
 
+var checkPlayers = function(){
+	var interval = setInterval(isReady,1000);
+};
+
+var onRegisterResponse = function(reg){
+	reg = JSON.parse(reg);
+	$('#join').hide();
+	$('#load-player').show();
+	if(!reg.success){
+		warn('Oops,..Current game started');
+		return;
+	}
+	checkPlayers();
+};
+
 var postGameRequest = function(name) {
-	name = name || document.querySelector('input[name="name"]').value;
-	var req = new XMLHttpRequest();
-	req.onreadystatechange = function(){
-		if(req.readyState == 4 && req.status == 200){
-			var register = JSON.parse(req.responseText);
-			// document.querySelector('#welcome-user').innerHTML = 'Welcome, ' + resData.username ;
-			document.querySelector('#join').style.display = 'none';
-			document.querySelector('#load-player').style.display = 'block';
-			if(!register.done){
-				warn('Oops,..Current game started');
-				return;
-			}
-			checkPlayers();
-		};
-	};
-	req.open('POST', 'register', true);
-	req.send('name=' + document.querySelector('input[name="name"]').value);
+	var name=document.querySelector('input[name="name"]').value
+	$.post('/register',{name:name},onRegisterResponse);
 };
 
 //rerequest while no player is joined ...........................................
 
 var reRequest = function(){
-	var cookie = document.cookie;
+	var name = document.cookie.split('=')[1];
 	$("#loading").show();
-	var req_result = postGameRequest(cookie);
+	var req_result = postGameRequest(name);
 };
 
 window.onload = function(){

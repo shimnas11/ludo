@@ -25,9 +25,8 @@ describe('Controller',function(){
     it('should add a player to the game if there is chance',function(done){
       request(controller)
         .post('/register')
-        .set('Cookie','name=a')
-        .send('name=a')
-        .expect(200,/"done":true/,done);
+        .send("name=foo")
+        .expect(200,'{"success":true}',done);
     })
     it('shouldn\'t add player if the game is full',function(done){
       //now max no of players is two
@@ -35,22 +34,24 @@ describe('Controller',function(){
       request(controller)
         .post('/register')
         .send('name=c')
-        .expect(200,/"done":false/,done);
+        .expect(200,'{"success":false}',done);
     })
   });
-  // describe('GET /update',function(){
-  //   it('serves current player object and the dice value',function(done){
-  //     request(controller)
-  //       .get('/update')
-  //       // .expect(200)
-  //       .expect(/player:(.*)dice:/,done);
-  //   })
-  // });
+  describe('GET /update',function(){
+    it('serves current player object and the dice value',function(done){
+      var response={};
+
+      request(controller)
+        .get('/update')
+        .expect(200)
+        .expect(/{"player":{"name":(.*),"dice":1}/,done);
+    })
+  });
   describe('POST /rollDice',function(){
     it('should generate and serve a dice value',function(done){
       request(controller)
         .post('/rollDice')
-        .expect(/"diceValue":/,done);
+        .expect(/{"diceValue":/,done);
     })
-  })
+  });
 })
