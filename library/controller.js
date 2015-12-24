@@ -22,6 +22,7 @@ app.get('/',function(req, res, next){
   req.url = '/index.html';
   next();
 });
+
 app.use(express.static('./public'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
