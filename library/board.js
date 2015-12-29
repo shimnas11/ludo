@@ -1,27 +1,9 @@
-var ld = require('lodash');
-// var routes=require('./routes.js').routes;
-
-var grid = function(){
-	var grid = ld.fill(Array(25),{coin:[],isSafe:false});
-	return ld.chunk(grid,5);
+var Board = function(){
+	this.playersPath = {
+		player1:[0,13,12,11,21,31,41,51,52,53,54,55,45,35,25,15,14,24,34,44,43,42,32,22,23,33],
+		player2:[1,53,54,55,45,35,25,15,14,13,12,11,21,31,41,51,52,42,32,22,23,24,34,44,43,33]
+	};
+	this.safePositions = [13,31,35,53,33];
 };
 
-// var generateIndexs = function(place){
-// 	var array = [];
-// 	for(i in routes){
-// 		array.push(routes[i][place]);
-// 	};
-// 	return array;
-// };
-
-var gridWithSafeZones = function(grid,points){
-	points.forEach(function(x){
-		grid[x[0]][x[1]] = {coin:[],isSafe:true};
-	});
-	return grid;
-};
-exports.Board = function(){
-	// this.safeZones = generateIndexs(0);
-	// this.entryPoints = generateIndexs(15);
-	// this.grid = gridWithSafeZones(grid(),this.safeZones);
-};
+exports.Board = Board;

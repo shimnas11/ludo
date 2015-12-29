@@ -1,7 +1,8 @@
 var lib = require('../library/coins.js');
 var chai = require('chai');
 var assert = chai.assert;
-var paths = require('../library/moves.js').players;
+var board = require('../library/board.js').Board;
+var paths = new board().playersPath;
 
 describe('movement of coin',function(){
 	it("player1's coin 1 should move according to the dice value",function(){

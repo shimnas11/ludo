@@ -1,4 +1,5 @@
-var safePositions = require('./moves.js').safePositions;
+var board = require('./board.js').Board;
+var safePositions = new board().safePositions;
 var ld = require('lodash');
 var players = {player1:{},player2:{}}
 var diceValue ;

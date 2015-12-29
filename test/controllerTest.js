@@ -47,11 +47,11 @@ describe('Controller',function(){
         .expect(/{"player":{"name":(.*),"dice":1}/,done);
     })
   });
-  describe('POST /rollDice',function(){
+  describe('GET /rollDice',function(){
     it('should generate and serve a dice value',function(done){
       request(controller)
         .get('/rollDice')
-        .expect(/{"diceValue":/,done);
+        .expect(/"diceValue":/,done);
     })
   });
 })
