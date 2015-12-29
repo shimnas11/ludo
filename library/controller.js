@@ -56,7 +56,7 @@ app.post('/register',function(req, res){
   res.end(JSON.stringify({'success': success}));
 });
 
-app.post('/rollDice',function(req, res){
+app.get('/rollDice',function(req, res){
   var diceData =JSON.stringify({'diceValue': game.rollDice()});
   res.end(diceData);
 });
