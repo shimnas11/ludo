@@ -24,19 +24,19 @@ var move = function(coin,clas){
   clas+'&position='+players[coin.className][coin.id].position);
 };
 
-var rollDice = function(){
-  var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-    if(req.readyState==4 && req.status==200){
-      var response = req.responseText;
-      console.log('rolling response :',response)
-      players.dice.diceValue=JSON.parse(response).dice.diceValue;
-      $('.dice').html('<img value="eyweywqfe" src="./images/d'+players.dice.diceValue+'.gif" onclick="rollDice()">')
-    }
-  }
-  req.open('POST','rollDice',true);
-  req.send('diceValue='+players.dice.diceValue);
-}
+// var rollDice = function(){
+//   var req = new XMLHttpRequest();
+//   req.onreadystatechange = function(){
+//     if(req.readyState==4 && req.status==200){
+//       var response = req.responseText;
+//       console.log('rolling response :',response)
+//       players.dice.diceValue=JSON.parse(response).dice.diceValue;
+//       $('.dice').html('<img value="eyweywqfe" src="./images/d'+players.dice.diceValue+'.gif" onclick="rollDice()">')
+//     }
+//   }
+//   req.open('POST','rollDice',true);
+//   req.send('diceValue='+players.dice.diceValue);
+// }
 
 var diceUpdate = function(data){
   console.log('updation data :',data);
@@ -106,7 +106,8 @@ var movePlayer2=function(keys){
 var rollDice = function(){
   $.get('rollDice', function(data){
     var diceValue = JSON.parse(data);
-    $('.dice').prop('src','./images/d' + diceValue + '.gif');
+    console.log('in roll dice client',diceValue);
+    $('.dice').prop('src','./images/d' + diceValue.diceValue + '.gif');
   });
 };
 
@@ -126,7 +127,9 @@ var getUpdate = function(){
 };
 
 var onload = function (){
+  $('.dice').click(rollDice);
   setInterval(getUpdate,1000);
+
   // setInterval(getUpdation,1000);
 };
 $(document).ready(onload);

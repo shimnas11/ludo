@@ -50,7 +50,7 @@ describe('Controller',function(){
   describe('POST /rollDice',function(){
     it('should generate and serve a dice value',function(done){
       request(controller)
-        .post('/rollDice')
+        .get('/rollDice')
         .expect(/{"diceValue":/,done);
     })
   });
