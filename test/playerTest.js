@@ -1,25 +1,19 @@
-var assert = require('chai').assert;
-var expect = require('chai').expect;
-var Player = require('../library/player');
+var assert=require('chai').assert;
+var sinon = require('sinon');
+var Player=require('../library/new_player.js');
 
-describe('Player',function(){
-    it('is created without any chance and kill',function(){
-      var player = new Player('alex','red');
-      assert.equal(player.kill,0);
-      assert.equal(player.chance,0);
-    });
-
-    it('can add and remove bonus chances',function(){
-      var player = new Player('alex','red');
-      player.addOneBonus();
-      assert.equal(player.chance,1);
-      player.removeOneBonus();
-      assert.equal(player.chance,0);
-    });
-
-    it('can have new kills',function(){
-      var player  = new Player('alex','red');
-      player.addOneKill();
-      assert.equal(player.kill,1);
-    });
+describe("move",function(){
+  it("should be able to move a coin by one position",function(){
+    var coin={getPosition:sinon.stub().returns(0),
+              coinId:sinon.stub().returns(1)};
+    var coins={};
+    coins[coin.coinId()]=coin;
+    var tile1={};
+    var tile2={placeCoin:function(){}};
+    var spy=sinon.spy(tile2,"placeCoin");
+    var path=[tile1,tile2];
+    var player=new Player("Sarath","green",coins,path);
+    player.move(coin.coinId(),1);
+    assert.ok(spy.withArgs(coin).calledOnce);
+  });
 });
