@@ -34,7 +34,7 @@ var onRegisterResponse = function(reg){
 };
 
 var postGameRequest = function(name) {
-	var name=document.querySelector('input[name="name"]').value
+	var name = name || document.querySelector('input[name="name"]').value
 	$.post('/register',{name:name},onRegisterResponse);
 };
 
@@ -46,7 +46,14 @@ var reRequest = function(){
 	var req_result = postGameRequest(name);
 };
 
+var onPlayButtonClick = function(){
+	var name = document.cookie.split('=')[1];
+	if(name) postGameRequest(name);
+	$('#id01').show();
+}
+
 window.onload = function(){
-	document.querySelector('#register').onclick = postGameRequest;
-	document.querySelector('#Retry').onclick = reRequest;
+	$('#register').click(postGameRequest);
+	$('#Retry').click(reRequest);
+	$('#playbtn').click(onPlayButtonClick);
 };

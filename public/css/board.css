@@ -4,20 +4,18 @@
 	left:450px;
 	top:120px;
 }
-.green{
+.green_home{
 	background-color: ivory;
 	position:absolute;
 	left:600px;
 	top:40px;
-	pointer-events:none;
 }
 
-.yellow{
+.yellow_home{
 	background-color: ivory;
 	position:absolute;
 	left:600px;
 	top:600px;
-	pointer-events:none;
 }
 button{
 	width:35px;
@@ -28,38 +26,38 @@ button{
 	line-height:100px;
 	text-align:center;
 }
-.player1{
+.green{
 	display:block;
-	background:#b0e600;
+	background:#00e625;
+	pointer-events:none;
 }
-.player2{
+.yellow{
 	display:block;
-	background:#ff6666;
+	background:#f7ff66;
+	pointer-events:none;
 }
 .dice {
-		pointer-events:auto;
+	pointer-events:auto;
 }
-
 .round-button {
-    width: 10%;
-    height: 0;
-    padding-bottom: 10%;
-    border-radius: 50%;
-    border: 2px solid #f5f5f5;
-    overflow: hidden;
-    background: #464646;
-    box-shadow: 0 0 3px gray;
+  width: 10%;
+  height: 0;
+  padding-bottom: 10%;
+  border-radius: 50%;
+  border: 2px solid #f5f5f5;
+  overflow: hidden;
+  background: #464646;
+  box-shadow: 0 0 3px gray;
 }
 .round-button:hover {
-    background: #262626;
+  background: #262626;
 }
 .round-button img {
-    display: block;
-    width: 76%;
-    padding: 12%;
-    height: auto;
+  display: block;
+  width: 76%;
+  padding: 12%;
+  height: auto;
 }
-
 .status-bar {
 	float:left;
 }

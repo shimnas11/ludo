@@ -1,12 +1,12 @@
 var Player = require('./player');
 var ld = require('lodash');
 var diceLib = require('./dice.js');
-var boardLib = require('./board.js');
+var Board = require('./board.js');
 var Coin = require('./coins.js').Coin;
 
 var Game = function(totalNumberOfPlayers){
 	this._dice = new diceLib();
-	this.board = new boardLib.Board();
+	this.board = new Board();
 	this.players = [];
 	this.totalNumberOfPlayers = totalNumberOfPlayers;
 	this.colours = ['green','yellow','blue','red'];
@@ -20,10 +20,10 @@ Game.prototype = {
 		var numberOfPlayers = this.players.length;
 		if(numberOfPlayers < this.totalNumberOfPlayers){
 			var coins = this.generateCoins(this.colours.shift(),4);
-			
+
 			var player = new Player(name,coins);
 			player.isMyTurn = numberOfPlayers==0;
-			
+
 			this.players.push(player);
 			return true;
 		};
@@ -32,7 +32,7 @@ Game.prototype = {
 	getPlayer:function(name){
 		var playerIndex = ld.findIndex(this.players, { 'name': name });
 		return this.players[playerIndex];
-	},	
+	},
 	findCurrentPlayer:function(){
 		var currentPlayerIndex = ld.findIndex(this.players, { 'isMyTurn': true });
 		return this.players[currentPlayerIndex];
@@ -45,13 +45,13 @@ Game.prototype = {
 	},
 	rollDice:function(){
 		this._dice.roll();
-		
+
 		var currentPlayer = this.findCurrentPlayer();
 		currentPlayer.chance--;
 
 		if(this._dice.diceValue == 6)
 			currentPlayer.chance++;
-		
+
 		if(!currentPlayer.chance)
 			this.changeTurn();
 	},
@@ -82,7 +82,7 @@ Game.prototype = {
 		board.getPositionIfMoved(coinToBeMoved,diceValue);
 
 		var cellRoutes = moves[coinToBeMoved.coinClass];
-		if(Object.keys(players[coinToBeMoved.coinClass]) == 0 || 
+		if(Object.keys(players[coinToBeMoved.coinClass]) == 0 ||
 			players[coinToBeMovedcoinClass][coinToBeMoved.coinId]==undefined){
 			var pos = cellRoutes.indexOf(+coinToBeMoved.position);
 		}

@@ -5,9 +5,9 @@ var ale=function(self){
 
 var printGrid=function(clas){
 	var a = [];
-	for(var j=1;j<6;j++){
-		for(var i = 1 ; i <6 ; i++){
-			a.push("<td width=100px height=90px id="+j+i+"></td>");
+	for(var j=0;j<5;j++){
+		for(var i = 0 ; i <5 ; i++){
+			a.push("<td width=100px height=90px id="+j+i+" onclick = 'ale(this)'></td>");
 		}
 		a.push('</tr><tr>');
 	};

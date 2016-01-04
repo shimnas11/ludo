@@ -10,11 +10,14 @@ Player.prototype =  {
 	get coins(){
 		return this._coins;
 	},
-	getCoinColour : function(){
-		return (this._coins.length==0) ? null: this._coins[0].colour;
+	get color(){
+		return this.coins[0].color;
 	},
-	getCoin : function(coinId){
-		return (coinId) ? this._coins[coinId] : null;
+	// getCoinColour : function(){
+	// 	return this.coins[0].color;
+	// },
+	getCoin : function(id){
+		return (id) ? this.coins[id-1] : this.coins;
 	},
 	get chance(){
 		return this._chance;
