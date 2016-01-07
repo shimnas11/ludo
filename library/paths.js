@@ -67,7 +67,7 @@ var rotater=function(max) {
 
 Paths.generate=function() {
 	var board=generateBoard(5);
-	var rotatePath=rotater(5);
+	var rotatePath=rotater(4);
 	var firstPath=masterPath(5);
 	var secondPath=firstPath.map(rotatePath);
 	var thirdPath=secondPath.map(rotatePath);
