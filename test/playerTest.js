@@ -1,6 +1,6 @@
 var assert=require('chai').assert;
 var sinon = require('sinon');
-var Player=require('../library/new_player.js');
+var Player=require('../library/player.js');
 
 describe("move",function(){
   it("should be able to move a coin by one position",function(){

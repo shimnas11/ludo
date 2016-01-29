@@ -79,4 +79,6 @@ Paths.generate=function() {
 	});
 }
 
+//console.log(Paths.generate());
+
 module.exports=Paths;
