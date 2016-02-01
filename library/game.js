@@ -10,7 +10,7 @@ var Game = function(noOfPlayers){
 	this._colours = Object.keys(colours);
 	this._paths = Path.generate();
 	this._diceValue = [];
-}
+};
 
 var generateCoins = function(count,numOfPlayers,colour){
 	var coins = [];
@@ -19,7 +19,7 @@ var generateCoins = function(count,numOfPlayers,colour){
 	for (var i = start; i < end; i++)
 		coins.push(new Coin(i,colour));
 	return coins;
-}
+};
 
 Game.prototype = {
 	addPlayer:function(name){
@@ -36,6 +36,6 @@ Game.prototype = {
 		player.move(coin.id,diceValue);
 	}
 
-}
+};
 
 module.exports = Game;

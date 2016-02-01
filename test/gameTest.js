@@ -20,13 +20,31 @@ describe('Game', function(){
 	});
 	describe("coin movement", function(){
 		var game = new Game(2);
-		it("it should move coin according to the dice value", function(){
+		it("it should not enter to the board without dice value six", function(){
 			game.addPlayer('alex');
 			game.addPlayer('casper');
 			var coin = {id:5,colour:'blue'};
 			game.getDiceValue = sinon.stub().returns(2);
 			game.moveCoin(coin);
-			assert.equal(game._players[1]._coins[0]._position,2);
+			assert.equal(game._players[1]._coins[0]._position,0);
+
+		});
+		it("it should place the coin on the board if the dice value is six", function(){
+			game.addPlayer('alex');
+			game.addPlayer('casper');
+			var coin = {id:5,colour:'blue'};
+			game.getDiceValue = sinon.stub().returns(6);
+			game.moveCoin(coin);
+			assert.equal(game._players[1]._coins[0]._position,1);
+
+		});
+		it("it should place the coin according to the dice value", function(){
+			game.addPlayer('alex');
+			game.addPlayer('casper');
+			var coin = {id:5,colour:'blue'};
+			game.getDiceValue = sinon.stub().returns(2);
+			game.moveCoin(coin);
+			assert.equal(game._players[1]._coins[0]._position,3);
 
 		});
 	});

@@ -2,7 +2,7 @@ var Coin=function(id,colour) {
 	this._id=id;
 	this._colour=colour;
 	this._position=null;
-}
+};
 
 Coin.prototype={
 	isSameColourAs:function(otherCoin) {
@@ -14,6 +14,6 @@ Coin.prototype={
 	updatePosition : function(position){
 		this._position = position;
 	}
-}
+};
 
 module.exports=Coin;
