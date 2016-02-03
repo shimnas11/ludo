@@ -1,4 +1,5 @@
 var Game = require('./game');
+var fs = require('fs');
 var Croupier = require('./croupier');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -7,23 +8,25 @@ var croupier = new Croupier(Game);
 
 var express = require('express');
 var app = express();
-
-app.get('/', function(req, res, next) {
-  req.url = '/login.html';
-  next();
-})
-
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
 
+app.get('/', function(req, res, next) {
+  var masterPage = fs.readFileSync('./public/master.html', "utf8");
+  var loginPage = fs.readFileSync('./public/login.html',"utf8");
+  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/,loginPage);
+  res.send(data);
+  next();
+});
+
 app.use(function(req, res, next) {
   if (req.cookies.name)
     req.user = req.cookies.name;
   next();
-})
+});
 
 // terminal logging .......
 // app.use(function(req, res, next) {
@@ -41,7 +44,10 @@ var getGameFields = function(game) {
 
 app.post('/login',function(req,res){
 	req.header.cookie = req.body.name;
-	res.redirect('./chooseGame.html');
+  var masterPage = fs.readFileSync('./public/master.html', "utf8");
+  var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
+  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/,chooseGamePage);
+	res.send(data);
 });
 
 app.get('/getGames', function(req, res) {
