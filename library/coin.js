@@ -13,6 +13,9 @@ Coin.prototype={
 	},
 	updatePosition : function(position){
 		this._position = position;
+	},
+	die:function(){
+		this._position = null;
 	}
 };
 

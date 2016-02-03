@@ -12,15 +12,12 @@ Croupier.prototype = {
     this._games.push(game);
   },
   getAllGames: function(handler) {
-    console.log(handler);
     return this._games.map(handler);
   },
   getGameById: function(id) {
-    var game = ld.find(this._games, {
+    return ld.find(this._games, {
       _id: +id
     });
-    console.log(game);
-    return game;
   }
 }
 
