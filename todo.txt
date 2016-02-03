@@ -1,0 +1,6 @@
+ ====> Game  
+
+ 	Game.js : addPlayer, changeTurn, ask player to move coin, game status, 
+ 	GamePage.html : dice,board,coins
+ 	 
+
