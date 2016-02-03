@@ -2,6 +2,13 @@ var app = require('../library/controller');
 var request = require('supertest');
 
 describe("controller", function() {
+  describe('GET /',function(){
+    it('should serve the login page',function(done){
+          request(app)
+          .get('/')
+          .expect(200,done);
+      });
+  });
   describe("POST /addGame", function() {
     it("adds a new game and adds a player ie, creator", function(done) {
       request(app)
