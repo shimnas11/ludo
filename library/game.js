@@ -4,7 +4,8 @@ var Coin = require('./coin');
 var colours = require('./colours');
 var ld = require('lodash');
 
-var Game = function(noOfPlayers){
+var Game = function(noOfPlayers,id){
+	this._id = id;
 	this._players = [];
 	this._totalPlayers = noOfPlayers;
 	this._colours = Object.keys(colours);
