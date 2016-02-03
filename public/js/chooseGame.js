@@ -26,13 +26,29 @@ var showAllGames = function() {
   });
 };
 
+var redirectWhenGameIsReady = function() {
+  var gameId = document.cookie.split(/[=;]/)[3];
+  setInterval(function() {
+    $.post('/isGameReady', {
+      gameId: gameId
+    }, function(data) {
+      if (data.ready) {
+        console.log('in redirectWhenGameIsReady');
+        window.location = '/board.html'
+      }
+      //show players joined
+    }, 'json');
+  }, 1000);
+}
+
 var onCreateClick = function() {
   var gameSize = $('#game-list').val();
   $.post('/addGame', {
     gameSize: gameSize
   }, function(res) {
     res.success && $('#waitingModal').show();
-  },'json');
+    redirectWhenGameIsReady();
+  }, 'json');
 };
 
 var onJoinClick = function(button) {
@@ -43,15 +59,16 @@ var onJoinClick = function(button) {
     name: name
   }, function(res) {
     res.success && $('#waitingModal').show();
-  },'json');
+    redirectWhenGameIsReady();
+  }, 'json');
 };
 
 var onload = function() {
   document.cookie = "name=jhon";
   $('#create-btn').click(onCreateClick);
-  setInterval(function () {
+  setInterval(function() {
     showAllGames();
-  },1000);
+  }, 1000);
 };
 
 $.ready(onload);

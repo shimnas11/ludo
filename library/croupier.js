@@ -7,12 +7,19 @@ var Croupier = function(Game) {
 
 Croupier.prototype = {
   addGame: function(size, name) {
-    var game = new this.Game(+size, this._games.length + 1);
+    var id = this._games.length + 1;
+    var game = new this.Game(+size, id);
     game.addPlayer(name);
     this._games.push(game);
+    return id;
   },
-  getAllGames: function(handler) {
-    return this._games.map(handler);
+  getAvailableGames: function(handler) {
+    var games = [];
+    for (game of this._games) {
+      if (game._size - game._players.length)
+        games.push(handler(game));
+    }
+    return games;
   },
   getGameById: function(id) {
     return ld.find(this._games, {

@@ -34,19 +34,20 @@ app.use(function(req, res, next) {
 var getGameFields = function(game) {
   return {
     id: game._id,
-    no_of_players: game._totalPlayers,
-    joined: game._totalPlayers - game._players.length
-  };
+    no_of_players: game._size,
+    joined: game._size - game._players.length
+  }
 };
 
 app.get('/getGames', function(req, res) {
-  var games = croupier.getAllGames(getGameFields);
+  var games = croupier.getAvailableGames(getGameFields);
   res.set('Content-Type', 'application/json')
   res.end(JSON.stringify(games));
 });
 
 app.post('/addGame', function(req, res) {
-  croupier.addGame(req.body.gameSize, req.user);
+  var gameId = croupier.addGame(req.body.gameSize, req.user);
+  res.cookie('gameId', gameId);
   res.end(JSON.stringify({
     success: true
   }));
@@ -55,12 +56,21 @@ app.post('/addGame', function(req, res) {
 app.post('/joinGame', function(req, res) {
   var game = croupier.getGameById(req.body.gameId);
   game.addPlayer(req.user);
+  res.cookie('gameId', req.body.gameId);
   res.end(JSON.stringify({
     success: true
   }));
 });
 
-app.controller = function(games){
+app.post('/isGameReady', function(req, res) {
+  var game = croupier.getGameById(req.body.gameId);
+  res.end(JSON.stringify({
+    ready: game.isReady(),
+    players: game.getNamesOfPlayers()
+  }));
+});
+
+app.controller = function(games) {
   app.games = games || [];
 };
 

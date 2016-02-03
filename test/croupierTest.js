@@ -10,7 +10,7 @@ describe("Croupier", function() {
       croupier.addGame(4, 'jhony');
       var games = croupier._games;
       assert.ok(games.length, 1);
-      assert.ok(games[0]._totalPlayers, 4);
+      assert.ok(games[0]._size, 4);
       assert.ok(games[0]._players.length, 1);
     });
 
@@ -21,13 +21,13 @@ describe("Croupier", function() {
         assert.ok(game._id, 1);
       });
     });
-    
-    describe('getAllGames', function() {
+
+    describe('getAvailableGames', function() {
       it('gives all games with filtered fields', function() {
         croupier.addGame(2, 'guss');
         var handler = sinon.stub().returns({});
         handler = sinon.spy();
-        var games = croupier.getAllGames(handler);
+        var games = croupier.getAvailableGames(handler);
         assert.ok(games.length, 2);
         assert.ok(handler.calledTwice);
       });
