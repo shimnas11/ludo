@@ -8,12 +8,15 @@ var Player = function(name,colour,coins,path){
 
 Player.prototype = {
 	move:function(coinId,diceValue){
-		var coinToMove = this.getCoinById(coinId);
+		var coinToMove = this.getCoinById(+coinId);
 		var coinPosition = coinToMove.getPosition();
-		var destinationIndex = (coinPosition)? coinPosition+diceValue : (diceValue==6)? 1:0;
+		var position = ld.findIndex(this._path,{_id:coinPosition});
+		var destinationIndex = (position>=0)? position+diceValue : (diceValue==6)? 0:null;
+		if(destinationIndex == null) 
+			return ;
 		var tile = this._path[destinationIndex];
 		tile.placeCoin(coinToMove);
-		coinToMove.updatePosition(destinationIndex);
+		coinToMove.updatePosition(tile._id);
 	},
 	getCoinById : function(id){
 		return  ld.find(this._coins,{_id:id});

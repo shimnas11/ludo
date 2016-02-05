@@ -33,10 +33,8 @@ var redirectWhenGameIsReady = function() {
       gameId: gameId
     }, function(data) {
       if (data.ready) {
-        console.log('in redirectWhenGameIsReady');
         window.location = '/board.html'
       }
-      //show players joined
     }, 'json');
   }, 1000);
 }
@@ -64,11 +62,8 @@ var onJoinClick = function(button) {
 };
 
 var onload = function() {
-  document.cookie = "name=jhon";
   $('#create-btn').click(onCreateClick);
-  setInterval(function() {
-    showAllGames();
-  }, 1000);
+  setInterval(showAllGames(), 1000);
 };
 
 $.ready(onload);

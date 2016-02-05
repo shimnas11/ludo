@@ -20,31 +20,27 @@ describe('Game', function(){
 	});
 	describe("coin movement", function(){
 		var game = new Game(2);
+		game.addPlayer('alex');
+		game.addPlayer('casper');
 		it("it should not enter to the board without dice value six", function(){
-			game.addPlayer('alex');
-			game.addPlayer('casper');
-			var coin = {id:5,colour:'blue'};
-			game.getDiceValue = sinon.stub().returns(2);
+			var coin = {coinId:1,colour:'yellow'};
+			game._diceValue = 2;
 			game.moveCoin(coin);
-			assert.equal(game._players[1]._coins[0]._position,0);
+			assert.equal(game._players[1]._coins[0]._position,null);
 
 		});
 		it("it should place the coin on the board if the dice value is six", function(){
-			game.addPlayer('alex');
-			game.addPlayer('casper');
-			var coin = {id:5,colour:'blue'};
-			game.getDiceValue = sinon.stub().returns(6);
+			var coin = {coinId:5,colour:'blue'};
+			game._diceValue = 6;
 			game.moveCoin(coin);
-			assert.equal(game._players[1]._coins[0]._position,1);
+			assert.equal(game._players[1]._coins[0]._position,'2,4');
 
 		});
 		it("it should place the coin according to the dice value", function(){
-			game.addPlayer('alex');
-			game.addPlayer('casper');
-			var coin = {id:5,colour:'blue'};
-			game.getDiceValue = sinon.stub().returns(2);
+			var coin = {coinId:5,colour:'blue'};
+			game._diceValue = 2;
 			game.moveCoin(coin);
-			assert.equal(game._players[1]._coins[0]._position,3);
+			assert.equal(game._players[1]._coins[0]._position,'0,4');
 
 		});
 	});

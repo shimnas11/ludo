@@ -9,13 +9,12 @@ describe("move",function(){
   	var coin = new Coin(1,'green');
   	var coins = [];
     coins[1]=coin;
-    //var tile1={};
     var tile2={placeCoin:function(){}};
     var spy=sinon.spy(tile2,"placeCoin");
     var path=[tile2];
     var player=new Player("Sarath","green",coins,path);
     var coinId = ld.findIndex(coins,{_id:1});
     player.move(coinId,2);
-    assert.ok(spy.withArgs(coin).calledOnce);
+    assert.equal(coin._position,null);
   });
 });

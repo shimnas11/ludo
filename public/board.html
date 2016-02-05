@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="css/board.css">
+<script type="text/javascript" src="js/jquery-2.1.4.js" ></script>
+<script type="text/javascript" src="js/board.js" ></script>
+<div id="board">
+	<button id="dice" class="dice" onclick="rollDice(this)">Dice</button>
+	<label id="diceValue"></label>
+	<div class="home" id="h3">
+		<button type="button" id='c-13' class="green" onclick='move(this)'></button>
+		<button type="button" id='c-14' class="green" onclick='move(this)'></button>
+		<button type="button" id='c-15' class="green" onclick='move(this)'></button>
+		<button type="button" id='c-16' class="green" onclick='move(this)'></button>
+	</div>
+	<table class="grid" id="table">
+		<tr>
+		<td class="tile" id="00" ></td> 
+		<td class="tile" id="01" ></td>
+		<td class="tile safe-tile" id="02" ></td>
+		<td class="tile" id="03" ></td> 
+		<td class="tile" id="04" ></td> 
+		</tr>
+		<tr>
+		<td class="tile" id="10" ></td> 
+		<td class="tile" id="11" ></td> 
+		<td class="tile" id="12" ></td> 
+		<td class="tile" id="13" ></td> 
+		<td class="tile" id="14" ></td> 
+		</tr>
+		<tr>
+		<td class="tile safe-tile" id="20" ></td> 
+		<td class="tile" id="21" ></td> 
+		<td class="tile safe-tile" id="22" ></td> 
+		<td class="tile" id="23" ></td> 
+		<td class="tile safe-tile" id="24" ></td> 
+		</tr>
+		<tr>
+		<td class="tile" id="3" ></td> 
+		<td class="tile" id="31" ></td> 
+		<td class="tile" id="32" ></td> 
+		<td class="tile" id="33" ></td> 
+		<td class="tile" id="34" ></td> 
+		</tr>
+		<tr>
+		<td class="tile" id="40" ></td> 
+		<td class="tile" id="41" ></td> 
+		<td class="tile safe-tile" id="42" ></td>
+		<td class="tile" id="43" ></td> 
+		<td class="tile" id="44" ></td> 
+		</tr>
+	</table>
+	<div class="home" id="h1">
+		<button type="button" id='c-1' class="yellow" onclick='move(this)'></button>
+		<button type="button" id='c-2' class="yellow" onclick='move(this)'></button>
+		<button type="button" id='c-3' class="yellow" onclick='move(this)'></button>
+		<button type="button" id='c-4' class="yellow" onclick='move(this)'></button>
+	</div>
+	<div class="home" id="h2">
+		<button type="button" id='c-5' class="blue" onclick='move(this)'></button>
+		<button type="button" id='c-6' class="blue" onclick='move(this)'></button>
+		<button type="button" id='c-7' class="blue" onclick='move(this)'></button>
+		<button type="button" id='c-8' class="blue" onclick='move(this)'></button>
+	</div>
+	<div class="home" id="h4">
+		<button type="button" id='c-9' class="red" onclick='move(this)'></button>
+		<button type="button" id='c-10' class="red" onclick='move(this)'></button>
+		<button type="button" id='c-11' class="red" onclick='move(this)'></button>
+		<button type="button" id='c-12' class="red" onclick='move(this)'></button>
+	</div>
+</div>

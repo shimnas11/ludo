@@ -1,4 +1,5 @@
 var Player = require('./player');
+var Dice = require('./dice');
 var Path = require('./paths');
 var Coin = require('./coin');
 var colours = require('./colours');
@@ -9,8 +10,9 @@ var Game = function(size, id) {
   this._players = [];
   this._size = size;
   this._colours = Object.keys(colours);
-  this._paths = Path.generate();
-  this._diceValue = [];
+  this._paths = Path.generate(size);
+  this._dice = new Dice();
+  this._diceValue = null;
 };
 
 var generateCoins = function(count, numOfPlayers, colour) {
@@ -35,8 +37,12 @@ Game.prototype = {
     var player = ld.find(this._players, {
       _colour: coin.colour
     });
-    var diceValue = this.getDiceValue();
-    player.move(coin.id, diceValue);
+    var diceValue = this._diceValue;
+    player.move(coin.coinId, diceValue);
+  },
+  getDiceValue:function(){
+    this._diceValue = this._dice.roll();
+    return this._diceValue;
   },
   isReady: function() {
     return (this._size == this._players.length);
@@ -45,8 +51,15 @@ Game.prototype = {
     return this._players.map(function(player) {
       return Player._name;
     });
+  },
+  getAllCoins : function(){
+    var players = this._players;
+    var allCoins = [];
+    for(var i in players){
+      allCoins =  allCoins.concat(players[i]._coins);
+    }
+    return allCoins;
   }
-
 };
 
 module.exports = Game;
