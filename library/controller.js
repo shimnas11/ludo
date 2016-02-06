@@ -17,8 +17,8 @@ app.use(cookieParser());
 
 app.get('/', function(req, res, next) {
   var masterPage = fs.readFileSync('./public/master.html', "utf8");
-  var loginPage = fs.readFileSync('./public/login.html',"utf8");
-  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/,loginPage);
+  var loginPage = fs.readFileSync('./public/login.html', "utf8");
+  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, loginPage);
   res.send(data);
   next();
 });
@@ -43,12 +43,12 @@ var getGameFields = function(game) {
   }
 };
 
-app.post('/login',function(req,res){
-	res.cookie('name', req.body.name);
+app.post('/login', function(req, res) {
+  res.cookie('name', req.body.name);
   var masterPage = fs.readFileSync('./public/master.html', "utf8");
   var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
-  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/,chooseGamePage);
-	res.send(data);
+  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, chooseGamePage);
+  res.send(data);
 });
 
 app.get('/getGames', function(req, res) {
@@ -67,39 +67,63 @@ app.post('/addGame', function(req, res) {
 
 app.post('/joinGame', function(req, res) {
   var game = croupier.getGameById(req.body.gameId);
-  game.addPlayer(req.user);
-  res.cookie('gameId', req.body.gameId);
+  var status;
+  if (game) {
+    game.addPlayer(req.user);
+    res.cookie('gameId', req.body.gameId);
+    res.end(JSON.stringify({
+      success: true
+    }))
+  }
   res.end(JSON.stringify({
-    success: true
+    success: false
   }));
 });
 
-app.post('/isGameReady', function(req, res) {
-  var game = croupier.getGameById(req.body.gameId);
-  res.end(JSON.stringify({
-    ready: game.isReady(),
-    players: game.getNamesOfPlayers()
-  }));
-});
-
-app.post('/move',function(req,res){
+app.get('/isGameReady', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
-  var coin = req.body;
-  game.moveCoin(coin);
+  if (game) {
+    res.end(JSON.stringify({
+      ready: game.isReady(),
+      players: game.getNamesOfPlayers()
+    }));
+  }
   res.end();
 });
 
-app.get('/getStatus',function(req,res){
+app.post('/move', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
-  var coins = game.getAllCoins();
-
-  res.end(JSON.stringify(coins));
+  var currentPlayer = game.currentPlayer;
+  if (game && req.body.colour == currentPlayer._colour) {
+    if(req.body.playerName == currentPlayer._name){
+      var coin = req.body;
+      game.moveCoin(coin);
+    }
+  }
+  res.end();
 });
 
-app.post('/dice',function(req,res){
+app.get('/getStatus', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
-  var diceValue = game.getDiceValue();
-  res.end(JSON.stringify({diceValue:diceValue}));
+  if (!game) res.end();
+  var coins = game.getAllCoins();
+  var status = {
+    diceValue: game._diceValue,
+    player: game.currentPlayer,
+    coins: coins,
+  }
+  res.end(JSON.stringify(status));
+});
+
+app.post('/dice', function(req, res) {
+  var game = croupier.getGameById(req.cookies.gameId);
+  if (req.cookies.name == game.currentPlayer._name) {
+    var diceValue = game.getDiceValue();
+    res.end(JSON.stringify({
+      diceValue: diceValue
+    }));
+  }
+  res.end();
 });
 
 app.controller = function(games) {

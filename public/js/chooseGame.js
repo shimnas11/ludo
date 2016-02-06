@@ -27,11 +27,8 @@ var showAllGames = function() {
 };
 
 var redirectWhenGameIsReady = function() {
-  var gameId = document.cookie.split(/[=;]/)[3];
   setInterval(function() {
-    $.post('/isGameReady', {
-      gameId: gameId
-    }, function(data) {
+    $.get('/isGameReady', function(data) {
       if (data.ready) {
         window.location = '/board.html'
       }
@@ -51,10 +48,8 @@ var onCreateClick = function() {
 
 var onJoinClick = function(button) {
   var gameId = button.parentElement.id;
-  var name = document.cookie.split('=')[1];
   $.post('/joinGame', {
-    gameId: gameId,
-    name: name
+    gameId: gameId
   }, function(res) {
     res.success && $('#waitingModal').show();
     redirectWhenGameIsReady();
@@ -63,7 +58,7 @@ var onJoinClick = function(button) {
 
 var onload = function() {
   $('#create-btn').click(onCreateClick);
-  setInterval(showAllGames(), 1000);
+  setInterval(showAllGames, 1000);
 };
 
 $.ready(onload);

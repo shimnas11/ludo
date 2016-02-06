@@ -13,6 +13,8 @@ var Game = function(size, id) {
   this._paths = Path.generate(size);
   this._dice = new Dice();
   this._diceValue = null;
+  this._currentPlayerIndex = 0;
+  this.chances = 1;
 };
 
 var generateCoins = function(count, numOfPlayers, colour) {
@@ -39,24 +41,41 @@ Game.prototype = {
     });
     var diceValue = this._diceValue;
     player.move(coin.coinId, diceValue);
+    this._diceValue = undefined;
+    //if kill set chance..
+    this.changeTurnIfPossible();
   },
-  getDiceValue:function(){
+  getDiceValue: function() {
+    this.chances--;
     this._diceValue = this._dice.roll();
+    if(this._diceValue == 6)
+      this.chances++;
+    this.changeTurnIfPossible();
     return this._diceValue;
   },
   isReady: function() {
     return (this._size == this._players.length);
+  },
+  get currentPlayer(){
+    return this._players[this._currentPlayerIndex];
+  },
+  changeTurnIfPossible: function () {
+    var currentPlayer = this.currentPlayer;
+    if(!currentPlayer.hasAnyMoves(this._diceValue) && !this.chances){
+        this._currentPlayerIndex = (this._currentPlayerIndex+1)%this._size;
+        this.chances++;
+    };
   },
   getNamesOfPlayers: function() {
     return this._players.map(function(player) {
       return Player._name;
     });
   },
-  getAllCoins : function(){
+  getAllCoins: function() {
     var players = this._players;
     var allCoins = [];
-    for(var i in players){
-      allCoins =  allCoins.concat(players[i]._coins);
+    for (var i in players) {
+      allCoins = allCoins.concat(players[i]._coins);
     }
     return allCoins;
   }

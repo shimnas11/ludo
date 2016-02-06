@@ -5,9 +5,12 @@ var UnsafeTile=function(id) {
 
 UnsafeTile.prototype = {
   placeCoin:function(coin) {
-    if(this._coin)
+    if(this._coin){
       this._coin.die();
+      return true;
+    }
     this._coin=coin;
+    return false;
   },
   canPlaceCoin:function(coin) {
     if(this._coin && this._coin.isSameColourAs(coin))
