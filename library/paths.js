@@ -65,20 +65,18 @@ var rotater=function(max) {
 	}
 }
 
-Paths.generate=function() {
+Paths.generate=function(size) {
 	var board=generateBoard(5);
 	var rotatePath=rotater(4);
 	var firstPath=masterPath(5);
 	var secondPath=firstPath.map(rotatePath);
 	var thirdPath=secondPath.map(rotatePath);
 	var fourthPath=thirdPath.map(rotatePath);
-	return [firstPath,fourthPath,thirdPath,secondPath].map(function(path){
+	return [firstPath,secondPath,thirdPath,fourthPath].map(function(path){
 		return path.map(function(point){
 			return board[point.join(",")];
 		})
 	});
 }
-
-//console.log(Paths.generate());
 
 module.exports=Paths;

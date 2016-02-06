@@ -3,6 +3,7 @@ var fs = require('fs');
 var Croupier = require('./croupier');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var ld = require('lodash');
 
 var croupier = new Croupier(Game);
 
@@ -43,7 +44,7 @@ var getGameFields = function(game) {
 };
 
 app.post('/login',function(req,res){
-	req.header.cookie = req.body.name;
+	res.cookie('name', req.body.name);
   var masterPage = fs.readFileSync('./public/master.html', "utf8");
   var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
   var data = masterPage.replace(/CONTENT_PLACE_HOLDER/,chooseGamePage);
@@ -79,6 +80,26 @@ app.post('/isGameReady', function(req, res) {
     ready: game.isReady(),
     players: game.getNamesOfPlayers()
   }));
+});
+
+app.post('/move',function(req,res){
+  var game = croupier.getGameById(req.cookies.gameId);
+  var coin = req.body;
+  game.moveCoin(coin);
+  res.end();
+});
+
+app.get('/getStatus',function(req,res){
+  var game = croupier.getGameById(req.cookies.gameId);
+  var coins = game.getAllCoins();
+
+  res.end(JSON.stringify(coins));
+});
+
+app.post('/dice',function(req,res){
+  var game = croupier.getGameById(req.cookies.gameId);
+  var diceValue = game.getDiceValue();
+  res.end(JSON.stringify({diceValue:diceValue}));
 });
 
 app.controller = function(games) {
