@@ -76,7 +76,7 @@ describe('Game', function(){
 			game.moveCoin(coin6);
 			game._diceValue = 17;
 			game.moveCoin(coin6);
-			assert.equal(game._players[1]._coins[1]._position,'2,4');
+			assert.equal(game._players[1]._coins[1]._position,'1,4');
 			// assert.equal(game._players[0]._coins[0]._position,'3,1');
 		});
 	})

@@ -46,7 +46,7 @@ var placeCoins = function() {
 
 var rollDice = function(dice) {
   $.post('/dice', function(data) {
-     $('.dice').html('<img value="e" src="./images/d'+data.diceValue+'.gif" onclick="rollDice()">');
+     $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     $('.dice-lbl').html(data.diceValue);
     // $('.dice').html(data.diceValue);
   }, 'json');

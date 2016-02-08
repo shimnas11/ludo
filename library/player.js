@@ -20,13 +20,16 @@ Player.prototype = {
       _id: coinPosition
     });
     var destinationIndex = (position >= 0) ? position + diceValue : (diceValue == 6) ? 0 : null;
-    if ((destinationIndex == null) || (destinationIndex>15 && !this._kills))
+    if (destinationIndex == null)
       return;
+    if(destinationIndex > 15 && !this._kills)
+      destinationIndex = destinationIndex % 16;
     var tile = this._path[destinationIndex];
     if (tile.canPlaceCoin(coinToMove)) {
       if(tile.placeCoin(coinToMove))
-        this.incrementPlayersKill();
+        this._kills++;
       coinToMove.updatePosition(tile._id);
+      return true;
     }
   },
   incrementPlayersKill: function(){

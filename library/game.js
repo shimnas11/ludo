@@ -14,7 +14,7 @@ var Game = function(size, id) {
   this._dice = new Dice();
   this._diceValue = null;
   this._currentPlayerIndex = 0;
-  this.chances = 1;
+  this.chances = true;
 };
 
 var generateCoins = function(count, numOfPlayers, colour) {
@@ -40,17 +40,17 @@ Game.prototype = {
       _colour: coin.colour
     });
     var diceValue = this._diceValue;
-    player.move(coin.coinId, diceValue);
-    this._diceValue = undefined;
+     
+    this._diceValue = player.move(coin.coinId, diceValue) ? undefined : this._diceValue;
     //if kill set chance..
     this.changeTurnIfPossible();
   },
 
   getDiceValue: function() {
-    this.chances--;
+    this.chances = false;
     this._diceValue = this._dice.roll();
     if(this._diceValue == 6)
-      this.chances++;
+      this.chances = true;
     this.changeTurnIfPossible();
     return this._diceValue;
   },
@@ -62,9 +62,10 @@ Game.prototype = {
   },
   changeTurnIfPossible: function () {
     var currentPlayer = this.currentPlayer;
+    console.log("=======",this._diceValue, this.chances);
     if(!currentPlayer.hasAnyMoves(this._diceValue) && !this.chances){
         this._currentPlayerIndex = (this._currentPlayerIndex+1)%this._size;
-        this.chances++;
+        this.chances = true;
     };
   },
   getNamesOfPlayers: function() {
