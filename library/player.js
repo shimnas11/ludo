@@ -5,6 +5,7 @@ var Player = function(name, colour, coins, path) {
   this._coins = coins;
   this._path = path;
   this._kills = 0;
+	this._destinationCoins = 0;
 };
 
 var isReadyToGetInner = function(destinationIndex) {
@@ -26,6 +27,7 @@ Player.prototype = {
       destinationIndex = destinationIndex % 16;
     var tile = this._path[destinationIndex];
     if (tile.canPlaceCoin(coinToMove)) {
+			if(tile._id == '2,2') this._destinationCoins ++;
       if(tile.placeCoin(coinToMove)){
         this._Kill++;
       };
@@ -52,7 +54,10 @@ Player.prototype = {
       var tile = paths[destinationIndex];
       return tile.canPlaceCoin(coin);
     });
-  }
+  },
+	addDestinationCoin: function () {
+		this._
+	}
 };
 
 module.exports = Player;

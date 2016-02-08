@@ -23,25 +23,15 @@ var updateCoins = function(coins) {
   }
 }
 
-var enablePlayerIFTurn = function (player) {
-  var user = document.cookie.split(/[=;]/)[1];
-  if(user == player._name){
-    $('.'+player._colour).on('click');
-    $('.dice').on('click');
-  }
-}
-
 var update = function() {
   $.get('/getStatus', function(data) {
+		if(data.player._destinationCoins == 4)
+
     $('.main-container').off('click');
     $('#username').html(data.player._name + "'s");
     $('.dice-lbl').html(data.diceValue);
-    enablePlayerIFTurn(data.player);
     updateCoins(data.coins);
   }, 'json')
-}
-var placeCoins = function() {
-
 }
 
 var rollDice = function(dice) {
@@ -49,6 +39,14 @@ var rollDice = function(dice) {
     $('.dice-lbl').html(data.diceValue);
     // $('.dice').html(data.diceValue);
   }, 'json');
+}
+
+var onContinueClick = function () {
+	$.post('/endGame',function(data){
+		if (data.status) {
+			window.location = '/chooseGame.html'
+		}
+	}
 }
 
 var onload = function() {
