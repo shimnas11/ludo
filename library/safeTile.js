@@ -9,6 +9,7 @@ SafeTile.prototype = {
 	},
 	placeCoin:function(coin) {
 		this._coins.push(coin);
+		return false;
 	},
 	isEqual:function(tile) {
 		return this===tile;

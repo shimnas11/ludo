@@ -44,6 +44,7 @@ var getGameFields = function(game) {
 };
 
 app.post('/login', function(req, res) {
+  console.log(req.method,req.url);
   res.cookie('name', req.body.name);
   var masterPage = fs.readFileSync('./public/master.html', "utf8");
   var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
@@ -105,6 +106,7 @@ app.post('/move', function(req, res) {
 
 app.get('/getStatus', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
+  // console.log(game.getAllCoins,req.cookies.gameId);
   if (!game) res.end();
   var coins = game.getAllCoins();
   var status = {

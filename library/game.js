@@ -45,6 +45,7 @@ Game.prototype = {
     //if kill set chance..
     this.changeTurnIfPossible();
   },
+
   getDiceValue: function() {
     this.chances--;
     this._diceValue = this._dice.roll();

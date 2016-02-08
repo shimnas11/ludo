@@ -7,6 +7,7 @@ UnsafeTile.prototype = {
   placeCoin:function(coin) {
     if(this._coin){
       this._coin.die();
+      this._coin=coin;
       return true;
     }
     this._coin=coin;
