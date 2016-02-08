@@ -36,6 +36,7 @@ var update = function() {
 
 var rollDice = function(dice) {
   $.post('/dice', function(data) {
+     $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     $('.dice-lbl').html(data.diceValue);
     // $('.dice').html(data.diceValue);
   }, 'json');

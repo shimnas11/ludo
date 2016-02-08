@@ -23,7 +23,7 @@ Player.prototype = {
     var destinationIndex = (position >= 0) ? position + diceValue : (diceValue == 6) ? 0 : null;
     if (destinationIndex == null)
       return;
-    if(destinationIndex > 15 && !this._kill)
+    if(destinationIndex > 15 && !this._kills)
       destinationIndex = destinationIndex % 16;
     var tile = this._path[destinationIndex];
     if (tile.canPlaceCoin(coinToMove)) {
@@ -32,7 +32,11 @@ Player.prototype = {
         this._Kill++;
       };
       coinToMove.updatePosition(tile._id);
+      return true;
     }
+  },
+  incrementPlayersKill: function(){
+    this._kills++;
   },
   getCoinById: function(id) {
     return ld.find(this._coins, {
