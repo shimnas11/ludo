@@ -9,7 +9,7 @@ var Player = function(name, colour, coins, path) {
 };
 
 var isReadyToGetInner = function(destinationIndex) {
-  if(destinationIndex > 15 && this._kill > 0)
+  if(destinationIndex > 15 && this._kills > 0)
     return true;
   return false
 }
@@ -29,7 +29,7 @@ Player.prototype = {
     if (tile.canPlaceCoin(coinToMove)) {
 			if(tile._id == '2,2') this._destinationCoins ++;
       if(tile.placeCoin(coinToMove)){
-        this._Kill++;
+        this._kills++;
       };
       coinToMove.updatePosition(tile._id);
       return true;
