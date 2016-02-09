@@ -6,10 +6,11 @@ var Player = function(name, colour, coins, path) {
   this._path = path;
   this._kills = 0;
   this._chances = 1;
+	this._destinationCoins = 0;
 };
 
 var isReadyToGetInner = function(destinationIndex) {
-  if(destinationIndex > 15 && this._kill > 0)
+  if(destinationIndex > 15 && this._kills > 0)
     return true;
   return false
 }
@@ -32,6 +33,7 @@ Player.prototype = {
         this.incermentChances();
         this._kills++;
       }
+
       coinToMove.updatePosition(tile._id);
       return true;
     }
@@ -59,7 +61,10 @@ Player.prototype = {
       var tile = paths[destinationIndex];
       return tile.canPlaceCoin(coin);
     });
-  }
+  },
+	addDestinationCoin: function () {
+		this._
+	}
 };
 
 module.exports = Player;
