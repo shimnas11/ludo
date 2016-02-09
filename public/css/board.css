@@ -177,7 +177,7 @@ label {
     transition: opacity 400ms ease-in;
     pointer-events: none;
 }
-.winner-container:target {
+.winner-container-show {
     opacity:1;
     pointer-events: auto;
 }
@@ -192,6 +192,7 @@ label {
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
+    /*visibility: hidden;*/
 }
 .close {
     background: #606061;
@@ -230,7 +231,7 @@ label {
     border-radius: 9px;
     float: right;
 }
-.win-text {
+#win-text {
   width: 70%;
   height: 90%;
 }

@@ -7,9 +7,7 @@ var move = function() {
     coinId: id,
     colour: colour,
     playerName: document.cookie.split(/[=;]/)[1]
-  }, function(data) {
-    update();
-  })
+  }, update)
 }
 
 var updateCoins = function(coins) {
@@ -25,9 +23,10 @@ var updateCoins = function(coins) {
 
 var update = function() {
   $.get('/getStatus', function(data) {
-		if(data.player._destinationCoins == 4)
-
-    $('.main-container').off('click');
+		if(data.player._destinationCoins == 4){
+      $('#win-modal').addClass('winner-container-show')
+      $('#win-text').html(data.player._name)
+    }
     $('#username').html(data.player._name + "'s");
     $('.dice-lbl').html(data.diceValue);
     updateCoins(data.coins);
@@ -47,7 +46,7 @@ var onContinueClick = function () {
 		if (data.status) {
 			window.location = '/chooseGame.html'
 		}
-	}
+	});
 }
 
 var onload = function() {

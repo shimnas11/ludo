@@ -59,6 +59,7 @@ app.post('/login', function(req, res) {
 });
 app.get('/endGame',function (req,res) {
   var gameId = req.cookies.gameId;
+  croupier.endGame(gameId);
   res.end(JSON.stringify({
     status: true
   }))

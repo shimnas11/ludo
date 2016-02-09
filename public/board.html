@@ -7,7 +7,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <div class="main-container">
-	<a href="#win-modal">Open Modal</a>
+
+	<div id="win-modal" class="winner-container">
+	   <div>
+				<a href="#close" title="Close" class="close">X</a>
+       	<div id="win-text">
+       	</div>
+				<button id="continue" type="button" class="btn-continue" onclick="onContinueClick()">continue</button>
+	   </div>
+	</div>
+
   <div class="board-container">
     <div style="vertical-align: middle">
       <div>
@@ -19,15 +28,7 @@
 
         </div>
       </div>
-			<div id="win-modal" class="winner-container">
-		    <div>
-					<a href="#close" title="Close" class="close">X</a>
-		        	<div class="win-text">
 
-		        	</div>
-							<button id="continue" type="button" class="btn-continue" onclick="onContinueClick()">continue</button>
-		    </div>
-			</div>
       <div class="table-holder">
         <div id="h4" class="home green">
           <button type="button" id="c-13" class="coin green"></button>

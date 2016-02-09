@@ -50,7 +50,7 @@ div {
   border-radius: 25px;
 }
 
-.waiting {
+#waitingModal {
   display: none;
   width:100%;
 }
