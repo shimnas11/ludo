@@ -7,6 +7,7 @@ UnsafeTile.prototype = {
   placeCoin:function(coin) {
     if(this._coin){
       this._coin.die();
+      this._coin=coin;
       return true;
     }
     this._coin=coin;
@@ -22,7 +23,10 @@ UnsafeTile.prototype = {
   },
 	isEqual:function(tile) {
 		return this===tile;
-	}
+	},
+  removeCoin: function(){
+    this._coin = null;
+  }
 
 }
 module.exports=UnsafeTile;

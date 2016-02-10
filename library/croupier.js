@@ -25,6 +25,11 @@ Croupier.prototype = {
     return ld.find(this._games, {
       _id: +id
     });
+  },
+  endGame: function(id) {
+    var indexOfGame = ld.findIndex(this._games, getGameById(id));
+    if (indexOfGame != -1)
+      this._games.splice(indexOfGame, 1);
   }
 }
 

@@ -7,9 +7,7 @@ var move = function() {
     coinId: id,
     colour: colour,
     playerName: document.cookie.split(/[=;]/)[1]
-  }, function(data) {
-    update();
-  })
+  }, update)
 }
 
 var updateCoins = function(coins) {
@@ -23,17 +21,12 @@ var updateCoins = function(coins) {
   }
 }
 
-var enablePlayerIFTurn = function (player) {
-  var user = document.cookie.split(/[=;]/)[1];
-  if(user == player._name){
-    $('.'+player._colour).on('click');
-    $('.dice').on('click');
-  }
-}
-
 var update = function() {
   $.get('/getStatus', function(data) {
-    $('.main-container').off('click');
+		if(data.player._destinationCoins == 4){
+      $('#win-modal').addClass('winner-container-show')
+      $('#win-text').html(data.player._name)
+    }
     $('#username').html(data.player._name + "'s");
     $('.dice-lbl').html(data.diceValue);
     changeDice(data.diceValue);
@@ -42,9 +35,9 @@ var update = function() {
   }, 'json')
 }
 
-
 var rollDice = function(dice) {
   $.post('/dice', function(data) {
+     $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     $('.dice-lbl').html(data.diceValue);
     changeDice(data.diceValue);
   }, 'json');
@@ -75,6 +68,14 @@ var showPlayersCoins=function(){
       }
   },'json');
 };
+
+var onContinueClick = function () {
+	$.post('/endGame',function(data){
+		if (data.status) {
+			window.location = '/chooseGame.html'
+		}
+	});
+}
 
 var onload = function() {
   $('.dice').click(rollDice);

@@ -9,6 +9,12 @@ var croupier = new Croupier(Game);
 
 var express = require('express');
 var app = express();
+
+app.use(function(req, res, next){
+  console.log(req.method, req.url);
+  next();
+});
+
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
   extended: true
@@ -50,7 +56,13 @@ app.post('/login', function(req, res) {
   var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, chooseGamePage);
   res.send(data);
 });
-
+app.get('/endGame',function (req,res) {
+  var gameId = req.cookies.gameId;
+  croupier.endGame(gameId);
+  res.end(JSON.stringify({
+    status: true
+  }))
+});
 app.get('/getGames', function(req, res) {
   var games = croupier.getAvailableGames(getGameFields);
   res.set('Content-Type', 'application/json')

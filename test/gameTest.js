@@ -40,8 +40,86 @@ describe('Game', function(){
 			var coin = {coinId:5,colour:'blue'};
 			game._diceValue = 2;
 			game.moveCoin(coin);
+			assert.equal(game._players[1]._path[0]._coins.length,0);
 			assert.equal(game._players[1]._coins[0]._position,'0,4');
+		});
 
+	});
+	describe("kill movement",function(){
+		var game = new Game(2);
+		game.addPlayer('alex');
+		game.addPlayer('casper');
+		var coin5 = {coinId:5,colour:'blue'};
+		var coin1 = {coinId:1,colour:'yellow'};
+		it("the players kill field should increment after killing other player's coin",function(){
+			game._diceValue = 6;
+			game.moveCoin(coin5);
+			game._diceValue = 3;
+			game.moveCoin(coin5);
+			game._diceValue = 6;
+			game.moveCoin(coin1);
+			game._diceValue = 7;
+			game.moveCoin(coin1);
+			assert.equal(game._players[0]._kills,1);
+		});
+		it("the killed coin position is null",function(){
+			assert.equal(game._players[1]._coins[0]._position,null);
+		});
+		it("the player can enter the innerloop if he has killed a coin of other player",function(){
+			game._diceValue = 9;
+			game.moveCoin(coin1);
+			assert.notEqual(game._players[0]._coins[0]._position,game._players[0]._path[0]._id);
+			assert.equal(game._players[0]._coins[0]._position,'3,1');
+		});
+		it("the player should not enter the innerloop if he did not killed a coin of other player",function(){
+			var coin6 = {coinId:6, colour:'blue'};
+			game._diceValue = 6;
+			game.moveCoin(coin6);
+			game._diceValue = 17;
+			game.moveCoin(coin6);
+			assert.equal(game._players[1]._coins[1]._position,'1,4');
 		});
 	});
+	describe("bonus chances to players", function(){
+		var game = new Game(2);
+		game.addPlayer('alex');
+		game.addPlayer('casper');
+		var coin1 = {coinId:1,colour:'yellow'};
+		var coin5 = {coinId:5,colour:'blue'};
+		it("player should get an extra chance to roll dice if he got 6", function(){
+			game._diceValue = 6;
+			assert.equal(game._currentPlayerIndex,0);
+			assert.equal(game._players[0]._chances,1);
+			game.moveCoin(coin1);
+			assert.equal(game._players[0]._chances,0);
+		});
+		it("player's chance should be removed after rolling dice if he didn't get 6", function(){
+			game._diceValue = 2;
+			assert.equal(game._players[0]._chances,0);
+			assert.equal(game._currentPlayerIndex,1);
+			assert.equal(game._players[1]._chances,1);
+		});
+		it("player can not move his coins if he already utilized his chance", function(){
+			game._diceValue = 2;
+			game.moveCoin(coin5);
+			assert.equal(game._players[1]._chances,0);
+			assert.equal(game._currentPlayerIndex,0);
+			assert.equal(game._players[0]._chances,1);
+		});
+		it("player should get an extra chance to roll dice if he killed other player's coin", function(){
+			game._diceValue = 6;
+			game.moveCoin(coin5);
+			game._diceValue = 3;
+			game.moveCoin(coin5);
+			game._diceValue = 7;
+			game.moveCoin(coin1);
+			assert.equal(game._currentPlayerIndex,0);
+			assert.equal(game._players[0]._chances,1);
+			game._diceValue = 2;
+			game.moveCoin(coin1);
+			assert.equal(game._players[0]._chances,0);
+			assert.equal(game._players[1]._chances,1);
+		});
+	});
+
 });
