@@ -9,19 +9,14 @@ var Player = function(name, colour, coins, path) {
 	this._destinationCoins = 0;
 };
 
-var isReadyToGetInner = function(destinationIndex) {
-  if(destinationIndex > 15 && this._kills > 0)
-    return true;
-  return false
-}
 Player.prototype = {
   move: function(coinId, diceValue) {
-    // this._chances--;
     var coinToMove = this.getCoinById(+coinId);
     var coinPosition = coinToMove.getPosition();
     var position = ld.findIndex(this._path, {
       _id: coinPosition
     });
+    var previousTile = this._path[position];
     var destinationIndex = (position >= 0) ? position + diceValue : (diceValue == 6) ? 0 : null;
     if (destinationIndex == null)
       return;
@@ -29,6 +24,8 @@ Player.prototype = {
       destinationIndex = destinationIndex % 16;
     var tile = this._path[destinationIndex];
     if (tile.canPlaceCoin(coinToMove)) {
+      if(previousTile)previousTile.removeCoin(coinToMove);
+			if(tile._id == '2,2') this._destinationCoins ++;
       if(tile.placeCoin(coinToMove)){
         this.incermentChances();
         this._kills++;
@@ -65,9 +62,6 @@ Player.prototype = {
       return tile.canPlaceCoin(coin);
     });
   }
-	// addDestinationCoin: function () {
-	// 	this._
-	// }
 };
 
 module.exports = Player;

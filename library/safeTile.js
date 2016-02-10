@@ -1,3 +1,4 @@
+var ld = require('lodash');
 var SafeTile=function(id) {
 	this._id=id;
 	this._coins=[];
@@ -16,6 +17,12 @@ SafeTile.prototype = {
 	},
 	numberOfCoins:function() {
 		return this._coins.length;
+	},
+	removeCoin: function(coin){
+		var coinPosition = ld.findIndex(this._coins, {
+      _id: coin._id
+    });
+		this._coins.splice(coinPosition,1);
 	}
 }
 

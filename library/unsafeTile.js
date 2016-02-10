@@ -23,7 +23,10 @@ UnsafeTile.prototype = {
   },
 	isEqual:function(tile) {
 		return this===tile;
-	}
+	},
+  removeCoin: function(){
+    this._coin = null;
+  }
 
 }
 module.exports=UnsafeTile;

@@ -64,8 +64,8 @@ Game.prototype = {
   },
   changeTurnIfPossible: function () {
     var currentPlayer = this.currentPlayer;
-    this._players[this._currentPlayerIndex].decrementChances();
-    if(!currentPlayer.hasAnyMoves(this._diceValue) && 
+    currentPlayer.decrementChances();
+    if(!currentPlayer.hasAnyMoves(this._diceValue) &&
       this._players[this._currentPlayerIndex]._chances<=0) {
         this._currentPlayerIndex = (this._currentPlayerIndex+1)%this._size;
         this._players[this._currentPlayerIndex]._chances = 1;

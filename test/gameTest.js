@@ -40,9 +40,10 @@ describe('Game', function(){
 			var coin = {coinId:5,colour:'blue'};
 			game._diceValue = 2;
 			game.moveCoin(coin);
+			assert.equal(game._players[1]._path[0]._coins.length,0);
 			assert.equal(game._players[1]._coins[0]._position,'0,4');
-
 		});
+
 	});
 	describe("kill movement",function(){
 		var game = new Game(2);
@@ -120,5 +121,5 @@ describe('Game', function(){
 			assert.equal(game._players[1]._chances,1);
 		});
 	});
-});
 
+});
