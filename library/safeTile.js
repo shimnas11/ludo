@@ -1,3 +1,4 @@
+var ld = require('lodash');
 var SafeTile=function(id) {
 	this._id=id;
 	this._coins=[];

@@ -30,7 +30,7 @@ Player.prototype = {
       destinationIndex = destinationIndex % 16;
     var tile = this._path[destinationIndex];
     if (tile.canPlaceCoin(coinToMove)) {
-      previousTile.removeCoin(coinToMove);
+      if(previousTile)previousTile.removeCoin(coinToMove);
 			if(tile._id == '2,2') this._destinationCoins ++;
       if(tile.placeCoin(coinToMove)){
         this.incermentChances();

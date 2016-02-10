@@ -26,5 +26,11 @@ describe("canPlaceCoin",function(){
     tile.placeCoin(coin1);
     assert.notOk(tile.canPlaceCoin(coin2));
   });
-
+  // it("it should remove coin from the tile after moving",function() {
+  //   var coin = {coinId:5,colour:'blue'};
+  //   game._diceValue = 2;
+  //
+  //   game.moveCoin(coin);
+  //   assert.equal(game._players[1]._coins[0]._position,'0,4');
+  // })
 });
