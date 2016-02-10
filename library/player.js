@@ -20,6 +20,7 @@ Player.prototype = {
     var position = ld.findIndex(this._path, {
       _id: coinPosition
     });
+    var previousTile = this._path[position];
     var destinationIndex = (position >= 0) ? position + diceValue : (diceValue == 6) ? 0 : null;
     if (destinationIndex == null)
       return;
@@ -27,6 +28,7 @@ Player.prototype = {
       destinationIndex = destinationIndex % 16;
     var tile = this._path[destinationIndex];
     if (tile.canPlaceCoin(coinToMove)) {
+      previousTile.removeCoin(coinToMove);
 			if(tile._id == '2,2') this._destinationCoins ++;
       if(tile.placeCoin(coinToMove)){
         this._kills++;
@@ -58,10 +60,7 @@ Player.prototype = {
       var tile = paths[destinationIndex];
       return tile.canPlaceCoin(coin);
     });
-  },
-	addDestinationCoin: function () {
-		this._
-	}
+  }
 };
 
 module.exports = Player;
