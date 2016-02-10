@@ -35,6 +35,7 @@ Game.prototype = {
     this._players.push(player);
   },
   moveCoin: function(coin) {
+    console.log('--------move is called')
     var player = ld.find(this._players, {
       _colour: coin.colour
     });
@@ -43,13 +44,17 @@ Game.prototype = {
     this.changeTurnIfPossible();
   },
   getDiceValue: function() {
+    if(this.currentPlayer._chances<1)
+      return;
     this._diceValue = this._dice.roll();
-    validatePlayerChances();
+    this.validatePlayerChances();
     return this._diceValue;
   },
   validatePlayerChances: function(){
     if(this._diceValue==6)
       this._players[this._currentPlayerIndex].incermentChances();
+    else
+      this.changeTurnIfPossible();
   },
   isReady: function() {
     return (this._size == this._players.length);
@@ -59,6 +64,7 @@ Game.prototype = {
   },
   changeTurnIfPossible: function () {
     var currentPlayer = this.currentPlayer;
+    this._players[this._currentPlayerIndex].decrementChances();
     if(!currentPlayer.hasAnyMoves(this._diceValue) && 
       this._players[this._currentPlayerIndex]._chances<=0) {
         this._currentPlayerIndex = (this._currentPlayerIndex+1)%this._size;

@@ -16,7 +16,7 @@ var isReadyToGetInner = function(destinationIndex) {
 }
 Player.prototype = {
   move: function(coinId, diceValue) {
-    this._chances--;
+    // this._chances--;
     var coinToMove = this.getCoinById(+coinId);
     var coinPosition = coinToMove.getPosition();
     var position = ld.findIndex(this._path, {
@@ -41,6 +41,9 @@ Player.prototype = {
   incermentChances: function(){
     this._chances++;
   },
+  decrementChances: function(){
+    this._chances--;
+  },
   getCoinById: function(id) {
     return ld.find(this._coins, {
       _id: id
@@ -61,10 +64,10 @@ Player.prototype = {
       var tile = paths[destinationIndex];
       return tile.canPlaceCoin(coin);
     });
-  },
-	addDestinationCoin: function () {
-		this._
-	}
+  }
+	// addDestinationCoin: function () {
+	// 	this._
+	// }
 };
 
 module.exports = Player;

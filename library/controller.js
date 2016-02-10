@@ -118,7 +118,6 @@ app.post('/move', function(req, res) {
 
 app.get('/getStatus', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
-  // console.log(game.getAllCoins,req.cookies.gameId);
   if (!game) res.end();
   var coins = game.getAllCoins();
   var status = {
@@ -131,7 +130,9 @@ app.get('/getStatus', function(req, res) {
 
 app.post('/dice', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
+  // console.log('hihihihihihi',req.cookies.name, game.currentPlayer._name);
   if (req.cookies.name == game.currentPlayer._name) {
+    console.log('function called ..............')
     var diceValue = game.getDiceValue();
     res.end(JSON.stringify({
       diceValue: diceValue
