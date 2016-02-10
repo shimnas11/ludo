@@ -35,7 +35,6 @@ Game.prototype = {
     this._players.push(player);
   },
   moveCoin: function(coin) {
-    console.log('--------move is called')
     var player = ld.find(this._players, {
       _colour: coin.colour
     });

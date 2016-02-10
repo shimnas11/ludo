@@ -50,7 +50,6 @@ var getGameFields = function(game) {
 };
 
 app.post('/login', function(req, res) {
-  console.log(req.method,req.url);
   res.cookie('name', req.body.name);
   var masterPage = fs.readFileSync('./public/master.html', "utf8");
   var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
@@ -130,9 +129,7 @@ app.get('/getStatus', function(req, res) {
 
 app.post('/dice', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
-  // console.log('hihihihihihi',req.cookies.name, game.currentPlayer._name);
   if (req.cookies.name == game.currentPlayer._name) {
-    console.log('function called ..............')
     var diceValue = game.getDiceValue();
     res.end(JSON.stringify({
       diceValue: diceValue
