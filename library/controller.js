@@ -91,6 +91,12 @@ app.get('/isGameReady', function(req, res) {
   res.end();
 });
 
+app.post('/getPlayerCoins',function(req,res){
+    console.log(game._players);
+    res.end(JSON.stringify(game._players));
+})
+
+
 app.post('/move', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
   var currentPlayer = game.currentPlayer;

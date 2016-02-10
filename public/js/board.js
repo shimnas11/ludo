@@ -36,25 +36,50 @@ var update = function() {
     $('.main-container').off('click');
     $('#username').html(data.player._name + "'s");
     $('.dice-lbl').html(data.diceValue);
+    changeDice(data.diceValue);
     enablePlayerIFTurn(data.player);
     updateCoins(data.coins);
   }, 'json')
 }
-var placeCoins = function() {
 
-}
 
 var rollDice = function(dice) {
   $.post('/dice', function(data) {
-     $('.dice').html('<img value="e" src="./images/d'+data.diceValue+'.gif" onclick="rollDice()">');
     $('.dice-lbl').html(data.diceValue);
-    // $('.dice').html(data.diceValue);
+    changeDice(data.diceValue);
   }, 'json');
 }
+
+var changeDice=function(diceValue){
+    if(diceValue==null)
+          return;
+    $('.dice').attr('src','images/d'+diceValue+'.gif')
+}
+
+var showPlayersCoins=function(){
+  $.post('/getPlayerCoins',function(data){
+        console.log(data._players,'====')
+        $('.player1').html(data[0]._name);
+        $('.colour1').html(data[0]._colour);
+        $('.player2').html(data[1]._name);
+        $('.colour2').html(data[1]._colour);
+        if($('.player3').html(data[2]._name)){
+            console.log('333333333333')
+            $('.player3').html(data[2]._name);
+            $('.colour3').html(data[2]._colour);
+        }
+        if($('.player4').html(data[3]._name)){
+            console.log('44444444444444')
+            $('.player4').html(data[3]._name);
+            $('.colour4').html(data[3]._colour);
+      }
+  },'json');
+};
 
 var onload = function() {
   $('.dice').click(rollDice);
   $('.coin').click(move);
+  showPlayersCoins();
   setInterval(update, 1000);
 };
 
