@@ -5,6 +5,7 @@ var Player = function(name, colour, coins, path) {
   this._coins = coins;
   this._path = path;
   this._kills = 0;
+  this._chances = 1;
 	this._destinationCoins = 0;
 };
 
@@ -15,6 +16,7 @@ var isReadyToGetInner = function(destinationIndex) {
 }
 Player.prototype = {
   move: function(coinId, diceValue) {
+    this._chances--;
     var coinToMove = this.getCoinById(+coinId);
     var coinPosition = coinToMove.getPosition();
     var position = ld.findIndex(this._path, {
@@ -31,14 +33,16 @@ Player.prototype = {
       previousTile.removeCoin(coinToMove);
 			if(tile._id == '2,2') this._destinationCoins ++;
       if(tile.placeCoin(coinToMove)){
+        this.incermentChances();
         this._kills++;
-      };
+      }
+
       coinToMove.updatePosition(tile._id);
       return true;
     }
   },
-  incrementPlayersKill: function(){
-    this._kills++;
+  incermentChances: function(){
+    this._chances++;
   },
   getCoinById: function(id) {
     return ld.find(this._coins, {
