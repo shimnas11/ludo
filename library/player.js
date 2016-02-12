@@ -56,7 +56,7 @@ Player.prototype = {
         _id: coinPosition
       });
       var destinationIndex = (position >= 0) ? position + diceValue : (diceValue == 6) ? 0 : null;
-      if (destinationIndex == null)
+      if (destinationIndex == null || destinationIndex>24)
         return;
       var tile = paths[destinationIndex];
       return tile.canPlaceCoin(coin);
