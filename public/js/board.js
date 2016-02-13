@@ -23,7 +23,6 @@ var updateCoins = function(coins) {
 
 var update = function() {
   $.get('/getStatus', function(data) {
-    console.log("====",data.player);
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
       $('#win-text').html(data.player._name+" won the game.")
@@ -39,10 +38,22 @@ var rollDice = function(dice) {
   $.post('/dice', function(data) {
      $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     $('.dice-lbl').html(data.diceValue);
-    // $('.dice').html(data.diceValue);
   }, 'json');
 }
 
+var showPlayersCoins=function(){
+   $.post('/getPlayerCoins',function(data){
+    console.log(data[0]._name,'=====');
+         $('.player1').html(data[0]._name);
+         $('.player2').html(data[1]._name);
+         if($('.player3').html(data[2]._name)){
+             $('.player3').html(data[2]._name);
+         }
+         if($('.player4').html(data[3]._name)){
+             $('.player4').html(data[3]._name);
+       }
+   },'json');
+ };
 var onContinueClick = function () {
 	$.get('/endGame',function(data){
 		if (data.status) {
@@ -54,6 +65,7 @@ var onContinueClick = function () {
 var onload = function() {
   $('.dice').click(rollDice);
   $('.coin').click(move);
+  showPlayersCoins();
   setInterval(update, 1000);
 };
 
