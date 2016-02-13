@@ -23,9 +23,10 @@ var updateCoins = function(coins) {
 
 var update = function() {
   $.get('/getStatus', function(data) {
-		if(data.player._destinationCoins == 4){
+    console.log("====",data.player);
+		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
-      $('#win-text').html(data.player._name)
+      $('#win-text').html(data.player._name+" won the game.")
     }
     $('#username').html(data.player._name + "'s");
     $('.dice-lbl').html(data.diceValue);
@@ -70,9 +71,9 @@ var showPlayersCoins=function(){
 };
 
 var onContinueClick = function () {
-	$.post('/endGame',function(data){
+	$.get('/endGame',function(data){
 		if (data.status) {
-			window.location = '/chooseGame.html'
+			window.location = 'http://localhost:8080/chooseGame.html'
 		}
 	});
 }

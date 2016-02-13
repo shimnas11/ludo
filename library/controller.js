@@ -129,6 +129,7 @@ app.get('/getStatus', function(req, res) {
     diceValue: game._diceValue,
     player: game.currentPlayer,
     coins: coins,
+    winner: game._winner
   }
   res.end(JSON.stringify(status));
 });

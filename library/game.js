@@ -14,6 +14,7 @@ var Game = function(size, id) {
   this._dice = new Dice();
   this._diceValue = null;
   this._currentPlayerIndex = 0;
+  this._winner;
 };
 
 var generateCoins = function(count, numOfPlayers, colour) {
@@ -40,6 +41,8 @@ Game.prototype = {
     });
     var diceValue = this._diceValue;
     this._diceValue = player.move(coin.coinId, diceValue) ? undefined : this._diceValue;
+    if(player._destinationCoins == 4) 
+      this._winner = player;
     this.changeTurnIfPossible();
   },
   getDiceValue: function() {
@@ -82,6 +85,9 @@ Game.prototype = {
       allCoins = allCoins.concat(players[i]._coins);
     }
     return allCoins;
+  },
+  setWinner: function(){
+    this
   }
 };
 
