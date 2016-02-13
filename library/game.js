@@ -54,7 +54,7 @@ Game.prototype = {
   },
   validatePlayerChances: function(){
     if(this._diceValue==6)
-      this._players[this._currentPlayerIndex].incermentChances();
+      this.currentPlayer.incrementChances();
     else
       this.changeTurnIfPossible();
   },
@@ -66,11 +66,15 @@ Game.prototype = {
   },
   changeTurnIfPossible: function () {
     var currentPlayer = this.currentPlayer;
-    currentPlayer.decrementChances();
-    if(!currentPlayer.hasAnyMoves(this._diceValue) &&
-      this._players[this._currentPlayerIndex]._chances<=0) {
-        this._currentPlayerIndex = (this._currentPlayerIndex+1)%this._size;
-        this._players[this._currentPlayerIndex]._chances = 1;
+    if(currentPlayer._killHappened){
+      currentPlayer.incrementChances();
+      currentPlayer._killHappened = false;
+    }
+    else
+      currentPlayer.decrementChances();
+    if(!currentPlayer.hasAnyMoves(this._diceValue) && currentPlayer._chances<=0 && !currentPlayer._killHappened) {
+      this._currentPlayerIndex = (this._currentPlayerIndex+1)%this._size;
+      this._players[this._currentPlayerIndex]._chances = 1;
     };
   },
   getNamesOfPlayers: function() {
