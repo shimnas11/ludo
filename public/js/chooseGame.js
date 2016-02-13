@@ -30,7 +30,7 @@ var redirectWhenGameIsReady = function() {
   setInterval(function() {
     $.get('/isGameReady', function(data) {
       if (data.ready) {
-        window.location = '/board.html'
+        window.location = '/board'
       }
     }, 'json');
   }, 1000);

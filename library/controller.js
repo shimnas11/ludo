@@ -4,6 +4,7 @@ var Croupier = require('./croupier');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var ld = require('lodash');
+var masterPage = fs.readFileSync('./public/master.html', "utf8");
 
 var croupier = new Croupier(Game);
 
@@ -51,11 +52,17 @@ var getGameFields = function(game) {
 
 app.post('/login', function(req, res) {
   res.cookie('name', req.body.name);
-  var masterPage = fs.readFileSync('./public/master.html', "utf8");
   var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
   var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, chooseGamePage);
   res.send(data);
 });
+
+app.get('/board', function(req, res) {
+  var board = fs.readFileSync('./public/board.html', "utf8");
+  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, board);
+  res.send(data);
+});
+
 app.get('/endGame',function (req,res) {
   var gameId = req.cookies.gameId;
   croupier.endGame(gameId);

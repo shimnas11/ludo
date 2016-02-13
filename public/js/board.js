@@ -23,12 +23,11 @@ var updateCoins = function(coins) {
 
 var update = function() {
   $.get('/getStatus', function(data) {
-    console.log("====",data.player);
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
       $('#win-text').html(data.player._name+" won the game.")
     }
-    $('#username').html(data.player._name + "'s");
+    $('#username').html(data.player._name + "'s turn");
     $('.dice-lbl').html(data.diceValue);
     updateCoins(data.coins);
   }, 'json')
