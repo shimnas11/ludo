@@ -30,6 +30,7 @@ var update = function() {
     }
     $('#username').html(data.player._name + "'s");
     $('.dice-lbl').html(data.diceValue);
+    $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     updateCoins(data.coins);
   }, 'json')
 }
