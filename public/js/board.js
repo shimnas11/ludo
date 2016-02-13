@@ -23,15 +23,20 @@ var updateCoins = function(coins) {
 
 var update = function() {
   $.get('/getStatus', function(data) {
-    console.log("====",data.player);
+    console.log("====",data.destinationCoins,'home==',data.homeCoinCount);
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
-      $('#win-text').html(data.player._name+" won the game.")
+      $('#winner-name').html(data.winner+" won the game.")
     }
-    $('#username').html(data.player._name + "'s");
+    $('#username').html(data.player + "'s");
+    var name = document.cookie.split(/[=;]/)[1];
+    if(name == data.player){
+      $('#cut-lbl').html(data.kills);
+      $('#final-lbl').html(data.destinationCoins);
+      $('#shed-lbl').html(data.homeCoinCount);
+    };
     $('.dice-lbl').html(data.diceValue);
     changeDice(data.diceValue);
-    enablePlayerIFTurn(data.player);
     updateCoins(data.coins);
   }, 'json')
 }
@@ -52,20 +57,11 @@ var changeDice=function(diceValue){
 
 var showPlayersCoins=function(){
   $.post('/getPlayerCoins',function(data){
-        console.log(data._players,'====')
-        $('.player1').html(data[0]._name);
-        $('.colour1').html(data[0]._colour);
-        $('.player2').html(data[1]._name);
-        $('.colour2').html(data[1]._colour);
-        if($('.player3').html(data[2]._name)){
-            console.log('333333333333')
-            $('.player3').html(data[2]._name);
-            $('.colour3').html(data[2]._colour);
-        }
-        if($('.player4').html(data[3]._name)){
-            console.log('44444444444444')
-            $('.player4').html(data[3]._name);
-            $('.colour4').html(data[3]._colour);
+      $('.player1').html(data.players[0].name);
+      $('.player2').html(data.players[1].name);
+      if(data.length>2){
+        $('.player3').html(data.players[2].name);
+        $('.player4').html(data.players[3].name);
       }
   },'json');
 };

@@ -102,10 +102,20 @@ app.get('/isGameReady', function(req, res) {
   }
   res.end();
 });
-
+var filterPlayer = function(players){
+  var filterrdPlayers =[];
+  for (player of players) {
+    filterrdPlayers.push({name:player._name,colour:player._colour})
+  }
+  console.log("in control",filterrdPlayers);
+  return filterrdPlayers;
+}
 app.post('/getPlayerCoins',function(req,res){
     console.log(game._players);
-    res.end(JSON.stringify(game._players));
+    var players = filterPlayer(game._players)
+    res.end(JSON.stringify({
+      players:players
+    }));
 })
 
 
@@ -120,16 +130,24 @@ app.post('/move', function(req, res) {
   }
   res.end();
 });
-
+var findHomeCoins = function(coins){
+  var count = ld.countBy(coins,function(coin){
+      return coin._position == null;})
+  return count.true;
+}
 app.get('/getStatus', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
   if (!game) res.end();
   var coins = game.getAllCoins();
+  var homeCoinCount = findHomeCoins(game.currentPlayer._coins);
   var status = {
     diceValue: game._diceValue,
-    player: game.currentPlayer,
+    player: game.currentPlayer._name,
     coins: coins,
-    winner: game._winner
+    winner: game._winner,
+    kills: game.currentPlayer._kills,
+    destinationCoins: game.currentPlayer._destinationCoins,
+    homeCoinCount: homeCoinCount
   }
   res.end(JSON.stringify(status));
 });

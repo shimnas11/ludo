@@ -194,7 +194,7 @@ label {
     background: -o-linear-gradient(#fff, #999);
     /*visibility: hidden;*/
 }
-.close {
+/*.close {
     background: #606061;
     color: #FFFFFF;
     line-height: 25px;
@@ -211,10 +211,7 @@ label {
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
-}
-.close:hover {
-    background: #00d9ff;
-}
+}*/
 
 .btn-continue {
     margin-bottom: 300px;
@@ -231,7 +228,21 @@ label {
     border-radius: 9px;
     float: right;
 }
-#win-text {
+#win-text-div {
+  margin-left: 15%;
+  padding-top: 10%;
   width: 70%;
-  height: 90%;
+  height: 80%;
+  image-orientation: center;
+}
+#win-text-div >img {
+  width: 40%;
+  height: 40%;
+  margin-left: 32%;
+}
+#winner-name {
+font-family: open-sands;
+font-size: 30px;
+text-align: center;
+margin-top: 15%;
 }

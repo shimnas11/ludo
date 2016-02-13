@@ -7,11 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <div class="main-container">
-
 	<div id="win-modal" class="winner-container">
 	   <div>
-				<a href="#close" title="Close" class="close">X</a>
-       	<div id="win-text">
+       	<div id="win-text-div">
+					<img src="/images/winner-modal.png" />
+					<div id="winner-name">
+						<!-- winner name -->
+						NIMESH <br>Won the game
+					</div>
        	</div>
 				<button id="continue" type="button" class="btn-continue" onclick="onContinueClick()">continue</button>
 	   </div>
@@ -23,7 +26,6 @@
         <div id="h3" class="home center red">
           <div>
             <label class="player3" ></label>
-            <label class="colour3" ></label>
           </div>
           <button type="button" id="c-9" class="coin red"></button>
           <button type="button" id="c-10" class="coin red"></button><br>
@@ -36,7 +38,6 @@
         <div id="h4" class="home green">
           <div>
             <label class="player4" ></label>
-            <label class="colour4" ></label>
           </div>
           <button type="button" id="c-13" class="coin green"></button>
           <button type="button" id="c-14" class="coin green"></button>
@@ -84,7 +85,6 @@
         <div id="h2" class="home blue">
               <div>
                 <label class="player2" ></label>
-                <label class="colour2" ></label>
               </div>
               <button type="button" id="c-5" class="coin blue"></button>
               <button type="button" id="c-6" class="coin blue"></button>
@@ -95,7 +95,6 @@
         <div id="h1" class="home center yellow">
           <div>
             <label class="player1" ></label><br>
-            <label class="colour1" ></label>
           </div>
           <button type="button" id="c-1" class="coin yellow"></button>
           <button type="button" id="c-2" class="coin yellow"></button>
@@ -123,15 +122,15 @@
       <div class="score-bar">
         <div class="cut" title="cut">
           <img src="images/sword.png" />
-          <label id="cut-lbl">0</label>
+          <label id="cut-lbl"></label>
         </div>
         <div class="final" title="home">
           <img src="images/winner.png" />
-          <label id="final-lbl">0</label>
+          <label id="final-lbl"></label>
         </div>
         <div class="shed" title="home">
           <img src="images/home.png" />
-          <label id="shed-lbl">4</label>
+          <label id="shed-lbl"></label>
         </div>
       </div>
     </div>
