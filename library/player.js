@@ -7,6 +7,7 @@ var Player = function(name, colour, coins, path) {
   this._kills = 0;
   this._chances = 1;
 	this._destinationCoins = 0;
+  this._killHappened = false;
 };
 
 Player.prototype = {
@@ -27,7 +28,7 @@ Player.prototype = {
       if(previousTile)previousTile.removeCoin(coinToMove);
 			if(tile._id == '2,2') this._destinationCoins ++;
       if(tile.placeCoin(coinToMove)){
-        this.incermentChances();
+        this._killHappened = true;
         this._kills++;
       }
 
@@ -35,7 +36,7 @@ Player.prototype = {
       return true;
     }
   },
-  incermentChances: function(){
+  incrementChances: function(){
     this._chances++;
   },
   decrementChances: function(){

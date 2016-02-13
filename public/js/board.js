@@ -23,12 +23,11 @@ var updateCoins = function(coins) {
 
 var update = function() {
   $.get('/getStatus', function(data) {
-    console.log("====",data.destinationCoins,'home==',data.homeCoinCount);
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
       $('#winner-name').html(data.winner+" won the game.")
     }
-    $('#username').html(data.player + "'s");
+    $('#username').html(data.player + "'s turn");
     var name = document.cookie.split(/[=;]/)[1];
     if(name == data.player){
       $('#cut-lbl').html(data.kills);
@@ -66,6 +65,19 @@ var showPlayersCoins=function(){
   },'json');
 };
 
+var showPlayersCoins=function(){
+   $.post('/getPlayerCoins',function(data){
+    console.log(data[0]._name,'=====');
+         $('.player1').html(data[0]._name);
+         $('.player2').html(data[1]._name);
+         if($('.player3').html(data[2]._name)){
+             $('.player3').html(data[2]._name);
+         }
+         if($('.player4').html(data[3]._name)){
+             $('.player4').html(data[3]._name);
+       }
+   },'json');
+ };
 var onContinueClick = function () {
 	$.get('/endGame',function(data){
 		if (data.status) {

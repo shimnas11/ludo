@@ -4,6 +4,7 @@ var Croupier = require('./croupier');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var ld = require('lodash');
+var masterPage = fs.readFileSync('./public/master.html', "utf8");
 
 var croupier = new Croupier(Game);
 
@@ -35,11 +36,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// terminal logging .......
-// app.use(function(req, res, next) {
-//   console.log('URL:', req.url);
-//   next();
-// })
 
 var getGameFields = function(game) {
   return {
@@ -51,11 +47,17 @@ var getGameFields = function(game) {
 
 app.post('/login', function(req, res) {
   res.cookie('name', req.body.name);
-  var masterPage = fs.readFileSync('./public/master.html', "utf8");
   var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
   var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, chooseGamePage);
   res.send(data);
 });
+
+app.get('/board', function(req, res) {
+  var board = fs.readFileSync('./public/board.html', "utf8");
+  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, board);
+  res.send(data);
+});
+
 app.get('/endGame',function (req,res) {
   var gameId = req.cookies.gameId;
   croupier.endGame(gameId);
@@ -91,7 +93,10 @@ app.post('/joinGame', function(req, res) {
     success: false
   }));
 });
-
+app.post('/getPlayerCoins',function(req,res){
+     console.log(game._players);
+     res.end(JSON.stringify(game._players));
+ })
 app.get('/isGameReady', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
   if (game) {
