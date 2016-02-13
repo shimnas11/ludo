@@ -27,7 +27,7 @@ var update = function() {
       $('#win-modal').addClass('winner-container-show')
       $('#win-text').html(data.player._name+" won the game.")
     }
-    $('#username').html(data.player._name + "'s");
+    $('#username').html(data.player._name + "'s turn");
     $('.dice-lbl').html(data.diceValue);
     $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     updateCoins(data.coins);
