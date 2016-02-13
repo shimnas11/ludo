@@ -85,39 +85,53 @@ describe('Game', function(){
 		game.addPlayer('casper');
 		var coin1 = {coinId:1,colour:'yellow'};
 		var coin5 = {coinId:5,colour:'blue'};
-		it("player should get an extra chance to roll dice if he got 6", function(){
-			game._diceValue = 6;
+		it("player turn should change if he doesn't get six when all of his coins are out of board", function(){
 			assert.equal(game._currentPlayerIndex,0);
 			assert.equal(game._players[0]._chances,1);
-			game.moveCoin(coin1);
-			assert.equal(game._players[0]._chances,0);
-		});
-		it("player's chance should be removed after rolling dice if he didn't get 6", function(){
 			game._diceValue = 2;
-			assert.equal(game._players[0]._chances,0);
+			game.validatePlayerChances();
 			assert.equal(game._currentPlayerIndex,1);
+			assert.equal(game._players[0]._chances,0);
 			assert.equal(game._players[1]._chances,1);
 		});
-		it("player can not move his coins if he already utilized his chance", function(){
-			game._diceValue = 2;
+		it("player should get one more chance when he get six", function(){
+			game._diceValue = 6;
+			game.validatePlayerChances();
 			game.moveCoin(coin5);
-			assert.equal(game._players[1]._chances,0);
+			assert.equal(game._currentPlayerIndex,1);
+			assert.equal(game._players[1]._chances,1);
+			assert.equal(game._players[0]._chances,0);
+
+		});
+		it("player's chance should be removed after rolling dice if he didn't get 6", function(){
+			//current player is 1
+			game._diceValue = 2;
+			game.validatePlayerChances();
+			game.moveCoin(coin5);
+			// current player is 0
 			assert.equal(game._currentPlayerIndex,0);
 			assert.equal(game._players[0]._chances,1);
 		});
 		it("player should get an extra chance to roll dice if he killed other player's coin", function(){
 			game._diceValue = 6;
-			game.moveCoin(coin5);
+			game.validatePlayerChances();
+			game.moveCoin(coin1);
 			game._diceValue = 3;
+			game.validatePlayerChances();
+			game.moveCoin(coin1);
+			game._diceValue = 1;
+			game.validatePlayerChances();
 			game.moveCoin(coin5);
-			game._diceValue = 7;
+			game._diceValue = 4;
+			game.validatePlayerChances();
 			game.moveCoin(coin1);
 			assert.equal(game._currentPlayerIndex,0);
 			assert.equal(game._players[0]._chances,1);
 			game._diceValue = 2;
+			game.validatePlayerChances();
 			game.moveCoin(coin1);
-			assert.equal(game._players[0]._chances,0);
 			assert.equal(game._players[1]._chances,1);
+			assert.equal(game._currentPlayerIndex,1);
 		});
 	});	
 });

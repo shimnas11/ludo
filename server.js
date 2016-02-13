@@ -1,4 +1,8 @@
 var http = require('http');
 var controller = require('./library/controller.js');
 
-http.createServer(controller).listen(8080);
+var IP_ADDRESS = process.env.OPENSHIFT_NODEJS_IP;
+var PORT = process.env.OPENSHIFT_NODEJS_PORT ||  8080;
+
+var server = http.createServer(controller);
+server.listen(PORT,IP_ADDRESS);
