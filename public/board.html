@@ -6,7 +6,12 @@
 
 	<div id="win-modal" class="winner-container">
 		<div>
-			<div id="win-text"></div>
+			<div id="win-text-div">
+ 					<img src="/images/winner-modal.png" />
+ 					<div id="winner-name">
+ 						<!-- winner name -->
+ 					</div>
+         	</div>
 			<button id="continue" type="button" class="btn-continue" onclick="onContinueClick()">continue</button>
 		</div>
 	</div>
@@ -14,6 +19,7 @@
 	<div class="board-container">
 		<div>
 			<div id="h3" class="home center ">
+				<div><label class="player3" ></label><br></div>
 				<button type="button" id="c-9" class="coin red"></button>
 				<button type="button" id="c-10" class="coin red"></button>
 				<button type="button" id="c-11" class="coin red"></button>
@@ -22,6 +28,7 @@
 		</div>
 		<div class="table-holder">
 			<div id="h4" class="side-home ">
+				<div><label class="player4" ></label><br></div>
 				<button type="button" id="c-13" class="coin green"></button>
 				<button type="button" id="c-14" class="coin green"></button>
 				<button type="button" id="c-15" class="coin green"></button>
@@ -65,6 +72,7 @@
 				</tr>
 			</table>
 			<div id="h2" class="side-home ">
+				<div><label class="player2" ></label><br></div>
 				<button type="button" id="c-5" class="coin blue"></button>
 				<button type="button" id="c-6" class="coin blue"></button>
 				<button type="button" id="c-7" class="coin blue"></button>
@@ -74,6 +82,7 @@
 		</div>
 		<div>
 			<div id="h1" class="home center ">
+				<div><label class="player1" ></label><br></div>
 				<button type="button" id="c-1" class="coin yellow"></button>
 				<button type="button" id="c-2" class="coin yellow"></button>
 				<button type="button" id="c-3" class="coin yellow"></button>

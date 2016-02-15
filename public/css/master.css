@@ -15,6 +15,7 @@ h1 {
   height: 93vh;
   top: 7vh;
   left: 0;
+  overflow: scroll;
   position: fixed;
   background-color: lightgray;
 }

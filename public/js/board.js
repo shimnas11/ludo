@@ -25,43 +25,44 @@ var update = function() {
   $.get('/getStatus', function(data) {
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
-      $('#winner-name').html(data.winner+" won the game.")
+      $('#winner-name').html(data.winner._name+" won the game.")
     }
     $('#username').html(data.player + "'s turn");
     var name = document.cookie.split(/[=;]/)[1];
     if(name == data.player){
       $('#cut-lbl').html(data.kills);
       $('#final-lbl').html(data.destinationCoins);
-      console.log(data.homeCoinCount);
       $('#shed-lbl').html(data.homeCoinCount);
     };
     $('.dice-lbl').html(data.diceValue);
-    changeDice(data.diceValue);
     updateCoins(data.coins);
+    changeDice(data.diceValue);
   }, 'json')
 }
 
 var rollDice = function(dice) {
   $.post('/dice', function(data) {
-     $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
+     // $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     $('.dice-lbl').html(data.diceValue);
     changeDice(data.diceValue);
   }, 'json');
 }
 
 var changeDice=function(diceValue){
-    if(diceValue==null)
+    if(diceValue==undefined)
           return;
-    $('.dice').attr('src','images/d'+diceValue+'.gif')
+    // $('.dice').attr('src','images/d'+diceValue+'.gif')
+      $('.dice').html('<img src="./images/d'+diceValue+'.gif">');
+
 }
 
 var showPlayersCoins=function(){
   $.post('/getPlayerCoins',function(data){
       $('.player1').html(data.players[0].name);
       $('.player2').html(data.players[1].name);
-      if(data.length==3)
+      if(data.players[2].name)
         $('.player3').html(data.players[2].name);
-      if(data.length==4)
+      if(data.players[3].name)
         $('.player4').html(data.players[3].name);
   },'json');
 };

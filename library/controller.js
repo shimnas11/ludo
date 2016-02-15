@@ -93,10 +93,6 @@ app.post('/joinGame', function(req, res) {
     success: false
   }));
 });
-app.post('/getPlayerCoins',function(req,res){
-     console.log(game._players);
-     res.end(JSON.stringify(game._players));
- })
 app.get('/isGameReady', function(req, res) {
   var game = croupier.getGameById(req.cookies.gameId);
   if (game) {
@@ -112,7 +108,6 @@ var filterPlayer = function(players){
   for (player of players) {
     filterrdPlayers.push({name:player._name,colour:player._colour})
   }
-  console.log("in control",filterrdPlayers);
   return filterrdPlayers;
 }
 app.post('/getPlayerCoins',function(req,res){
