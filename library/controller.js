@@ -23,7 +23,6 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 
 app.get('/', function(req, res, next) {
-  var masterPage = fs.readFileSync('./public/master.html', "utf8");
   var loginPage = fs.readFileSync('./public/login.html', "utf8");
   var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, loginPage);
   res.send(data);
@@ -57,13 +56,17 @@ app.get('/board', function(req, res) {
   var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, board);
   res.send(data);
 });
-
-app.get('/endGame',function (req,res) {
+app.get('/chooseGame', function(req, res) {
+  var chooseGamePage = fs.readFileSync('./public/chooseGame.html', "utf8");
+  var data = masterPage.replace(/CONTENT_PLACE_HOLDER/, chooseGamePage);
+  res.send(data);
+});
+app.post('/endGame',function (req,res) {
   var gameId = req.cookies.gameId;
   croupier.endGame(gameId);
-  res.end(JSON.stringify({
-    status: true
-  }))
+  res.send(JSON.stringify({
+    status:true
+  }));
 });
 app.get('/getGames', function(req, res) {
   var games = croupier.getAvailableGames(getGameFields);
@@ -111,7 +114,6 @@ var filterPlayer = function(players){
   return filterrdPlayers;
 }
 app.post('/getPlayerCoins',function(req,res){
-    console.log(game._players);
     var players = filterPlayer(game._players)
     res.end(JSON.stringify({
       players:players

@@ -23,12 +23,15 @@ var updateCoins = function(coins) {
 
 var update = function() {
   $.get('/getStatus', function(data) {
+    var name = document.cookie.split(/[=;]/)[1];
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
-      $('#winner-name').html(data.winner._name+" won the game.")
+      if(name == data.winner._name)
+        $('#winner-name').html("Congrats "+data.winner._name+"You won the game.");
+      else
+        $('#winner-name').html("you lose"+'<br>'+data.winner._name+" won "+"<br>"+" try next time..");
     }
     $('#username').html(data.player + "'s turn");
-    var name = document.cookie.split(/[=;]/)[1];
     if(name == data.player){
       $('#cut-lbl').html(data.kills);
       $('#final-lbl').html(data.destinationCoins);
@@ -67,11 +70,11 @@ var showPlayersCoins=function(){
   },'json');
 };
 var onContinueClick = function () {
-	$.get('/endGame',function(data){
+	$.post('/endGame',function(data){
 		if (data.status) {
-			window.location = 'http://localhost:8080/chooseGame.html'
+			window.location.replace('/chooseGame');
 		}
-	});
+	},'json');
 }
 
 var onload = function() {
