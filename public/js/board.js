@@ -32,6 +32,7 @@ var update = function() {
     if(name == data.player){
       $('#cut-lbl').html(data.kills);
       $('#final-lbl').html(data.destinationCoins);
+      console.log(data.homeCoinCount);
       $('#shed-lbl').html(data.homeCoinCount);
     };
     $('.dice-lbl').html(data.diceValue);
@@ -58,26 +59,12 @@ var showPlayersCoins=function(){
   $.post('/getPlayerCoins',function(data){
       $('.player1').html(data.players[0].name);
       $('.player2').html(data.players[1].name);
-      if(data.length>2){
+      if(data.length==3)
         $('.player3').html(data.players[2].name);
+      if(data.length==4)
         $('.player4').html(data.players[3].name);
-      }
   },'json');
 };
-
-var showPlayersCoins=function(){
-   $.post('/getPlayerCoins',function(data){
-    console.log(data[0]._name,'=====');
-         $('.player1').html(data[0]._name);
-         $('.player2').html(data[1]._name);
-         if($('.player3').html(data[2]._name)){
-             $('.player3').html(data[2]._name);
-         }
-         if($('.player4').html(data[3]._name)){
-             $('.player4').html(data[3]._name);
-       }
-   },'json');
- };
 var onContinueClick = function () {
 	$.get('/endGame',function(data){
 		if (data.status) {
