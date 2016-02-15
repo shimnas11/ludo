@@ -111,7 +111,6 @@ var filterPlayer = function(players){
   return filterrdPlayers;
 }
 app.post('/getPlayerCoins',function(req,res){
-    console.log(game._players);
     var players = filterPlayer(game._players)
     res.end(JSON.stringify({
       players:players

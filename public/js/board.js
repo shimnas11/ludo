@@ -25,7 +25,7 @@ var update = function() {
   $.get('/getStatus', function(data) {
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
-      $('#winner-name').html(data.winner._name+" won the game.")
+      $('#winner-name').html('Congratulation '+data.winner._name+" you won the game.")
     }
     $('#username').html(data.player + "'s turn");
     var name = document.cookie.split(/[=;]/)[1];
@@ -42,7 +42,6 @@ var update = function() {
 
 var rollDice = function(dice) {
   $.post('/dice', function(data) {
-     // $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     $('.dice-lbl').html(data.diceValue);
     changeDice(data.diceValue);
   }, 'json');
@@ -50,8 +49,7 @@ var rollDice = function(dice) {
 
 var changeDice=function(diceValue){
     if(diceValue==undefined)
-          return;
-    // $('.dice').attr('src','images/d'+diceValue+'.gif')
+          return ;
       $('.dice').html('<img src="./images/d'+diceValue+'.gif">');
 
 }
