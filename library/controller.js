@@ -147,9 +147,10 @@ app.get('/getStatus', function(req, res) {
     winner: game._winner,
     kills: game.currentPlayer._kills,
     destinationCoins: game.currentPlayer._destinationCoins,
-    homeCoinCount: homeCoinCount
+    homeCoinCount: homeCoinCount,
+    colour: game.currentPlayer._colour
   }
-  res.end(JSON.stringify(status));
+  res.json(status);
 });
 
 app.post('/dice', function(req, res) {

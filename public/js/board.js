@@ -21,6 +21,19 @@ var updateCoins = function(coins) {
   }
 }
 
+var getId = function(id){
+  var ids = {yellow:"h1", blue:"h2", red:"h3", green:"h4"};
+  return ids[id];
+};
+
+var removeClass = function(currentId){
+  var ids = ['h1','h2','h3','h4'];
+  var colours = ['yellow','blue','red','green'];
+  ids.forEach(function(id, i){
+      $('#'+id).removeClass(colours[i]);
+  });
+}
+
 var update = function() {
   $.get('/getStatus', function(data) {
 		if(data.winner){
@@ -28,6 +41,9 @@ var update = function() {
       $('#winner-name').html(data.winner._name+" won the game.")
     }
     $('#username').html(data.player + "'s turn");
+    var id = getId(data.colour);
+    removeClass(id);
+    $('#'+id).addClass(data.colour);
     var name = document.cookie.split(/[=;]/)[1];
     if(name == data.player){
       $('#cut-lbl').html(data.kills);
@@ -60,9 +76,9 @@ var showPlayersCoins=function(){
   $.post('/getPlayerCoins',function(data){
       $('.player1').html(data.players[0].name);
       $('.player2').html(data.players[1].name);
-      if(data.players[2].name)
+      if(data.players[2])
         $('.player3').html(data.players[2].name);
-      if(data.players[3].name)
+      if(data.players[3])
         $('.player4').html(data.players[3].name);
   },'json');
 };
