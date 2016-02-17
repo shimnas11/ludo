@@ -36,9 +36,13 @@ var removeClass = function(currentId){
 
 var update = function() {
   $.get('/getStatus', function(data) {
+    var name = document.cookie.split(/[=;]/)[1];
 		if(data.winner){
       $('#win-modal').addClass('winner-container-show')
-      $('#winner-name').html(data.winner._name+" won the game.")
+      if(name == data.winner._name)
+        $('#winner-name').html('Congratulation '+data.winner._name+" you won the game.")
+      else
+        $('#winner-name').html("you lose"+'<br>'+data.winner._name+" won "+"<br>"+" try next time..");
     }
     $('#username').html(data.player + "'s turn");
     var id = getId(data.colour);
@@ -58,7 +62,6 @@ var update = function() {
 
 var rollDice = function(dice) {
   $.post('/dice', function(data) {
-     // $('.dice').html('<img src="./images/d'+data.diceValue+'.gif">');
     $('.dice-lbl').html(data.diceValue);
     changeDice(data.diceValue);
   }, 'json');
@@ -66,8 +69,7 @@ var rollDice = function(dice) {
 
 var changeDice=function(diceValue){
     if(diceValue==undefined)
-          return;
-    // $('.dice').attr('src','images/d'+diceValue+'.gif')
+          return ;
       $('.dice').html('<img src="./images/d'+diceValue+'.gif">');
 
 }
@@ -83,11 +85,11 @@ var showPlayersCoins=function(){
   },'json');
 };
 var onContinueClick = function () {
-	$.get('/endGame',function(data){
+	$.post('/endGame',function(data){
 		if (data.status) {
-			window.location = 'http://localhost:8080/chooseGame.html'
+			window.location.replace('/chooseGame');
 		}
-	});
+	},'json');
 }
 
 var onload = function() {
