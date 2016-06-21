@@ -1,9 +1,9 @@
-var Croupier = require('../library/croupier');
+var Croupier = require('../library/GamePool');
 var Game = require('../library/game');
 var assert = require('chai').assert;
 var sinon = require('sinon');
 var ld = require('lodash');
-describe("Croupier", function() {
+describe("GamePool", function() {
   describe("addGame", function() {
     var croupier = new Croupier(Game);
     it("should add new game with 1 player ", function() {
